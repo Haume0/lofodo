@@ -361,10 +361,13 @@ function getSettings(){
       </div>{/if}
     </div>
   </div>
-  <div class="absolute flex flex-col w-56 h-20 right-6 bottom-6 z-50">
+  <div class="absolute flex flex-col w-56 h-auto right-6 bottom-6 z-50">
     <img src="/spicaLofitexed.svg" alt="" class="">
-    <span class="text-zinc-400 w-[100%] text-right">A project by Haume.</span>
-    <a href="https://www.patreon.com/Haume" target="_blank" rel="noreferrer" class="text-cyan-400 hover:text-violet-400 w-auto text-right high">Buy me a coffee.</a>
+    <span class="text-zinc-300 w-[100%] text-right font-Figtree">A project by Haume.</span>
+    <div class="flex flex-row gap-2 self-end">
+      <a href="https://www.patreon.com/Haume" target="_blank" rel="noreferrer" class="text-white font-medium font-Figtree hover:text-orange-600 w-auto text-right high">Buy me a coffee.</a>
+      <a href="https://spica.systems" class="text-white hover:text-cyan-400 w-auto text-right font-medium font-Figtree high">Return Spica</a>
+    </div>
   </div>
   <div class="relative flex flex-col m-auto z-10 bg-black/10 p-2 rounded-xl">
     <!-- svelte-ignore a11y-click-events-have-key-events -->

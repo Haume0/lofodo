@@ -360,7 +360,7 @@ function getSettings(){
     </div>
   </div>
   <div class="absolute flex flex-col w-56 h-20 right-6 bottom-6 z-50">
-    <img src="/public/spicaLofitexed.svg" alt="" class="">
+    <img src="/spicaLofitexed.svg" alt="" class="">
     <span class="text-zinc-400 w-[100%] text-right">A project by Haume.</span>
     <a href="https://www.patreon.com/Haume" target="_blank" rel="noreferrer" class="text-cyan-400 hover:text-violet-400 w-auto text-right high">Buy me a coffee.</a>
   </div>

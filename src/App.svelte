@@ -32,6 +32,7 @@ const luck = [
   'https://www.youtube.com/watch?v=UeMl03hXH-s',
   'https://www.youtube.com/watch?v=d8kwCDDIZqE',
   'https://www.youtube.com/watch?v=O7RG-B6N1Vw',
+  'https://www.youtube.com/watch?v=_tV5LEBDs7w',
 ]
 const luckBG = [
   'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.pinimg.com%2Foriginals%2F3e%2F4c%2F9d%2F3e4c9d81ba6be013081a1506dd7fcdec.gif&f=1&nofb=1&ipt=7f6162eee81594c85d933650d6411ae5c6e4f5dded816f2c49488373ef0c9343&ipo=images',

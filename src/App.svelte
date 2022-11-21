@@ -359,7 +359,12 @@ function getSettings(){
       </div>{/if}
     </div>
   </div>
-  <div class="flex flex-col m-auto z-10 bg-black/10 p-2 rounded-xl">
+  <div class="absolute flex flex-col w-56 h-20 right-6 bottom-6 z-50">
+    <img src="/public/spicaLofitexed.svg" alt="" class="">
+    <span class="text-zinc-400 w-[100%] text-right">A project by Haume.</span>
+    <a href="https://www.patreon.com/Haume" target="_blank" rel="noreferrer" class="text-cyan-400 hover:text-violet-400 w-auto text-right high">Buy me a coffee.</a>
+  </div>
+  <div class="relative flex flex-col m-auto z-10 bg-black/10 p-2 rounded-xl">
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <div class="h-[20px] hover:cursor-pointer mb-2 flex flex-row noslc gap-[2px] place-items-center place-content-center self-center">
       {#if setting.auto == true}

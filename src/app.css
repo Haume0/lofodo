@@ -91,11 +91,6 @@ html{
   transition: ease-in-out;
   transition-duration: 100ms;
 }
-mark{
-  background: linear-gradient(-111deg,#9A00FA 10%, #FF5C5C 99%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
 .br2{
   background: 
     linear-gradient(#222632, #222632) padding-box,

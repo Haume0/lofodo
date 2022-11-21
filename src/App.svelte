@@ -351,7 +351,7 @@ function getSettings(){
     </div>
     <div class="absolute left-0 top-0">
       <!-- <button on:click={() => scrBack()} class="w-5 h-[80px] -left-5 z-20 hover:cursor-pointer flex rounded-full bg-white/40 absolute group"><svg class:rotate-180={rawSource == ''} class="my-auto rotate-180" width="36" height="36" viewBox="0 0 24 24"><path d="M10 17V7l5 5Z"/></svg></button> -->
-      {#if showscr}<div on:mouseleave={()=> scrBack()} in:fly out:fly class:!w-screen={fullsc == true} class="w-[440px] h-[80px] z-10 absolute p-2 flex flex-col bg-black/40 backdrop-blur-sm rounded-xl">
+      {#if showscr}<div in:fly out:fly class:!w-screen={fullsc == true} class="w-[440px] h-[80px] z-10 absolute p-2 flex flex-col bg-black/40 backdrop-blur-sm rounded-xl">
         <span class="mx-auto font-Figtree font-semibold text-white">Music Source</span>
         <div>
           <input on:keypress={scr} type="text" class="absolute max-w-[96%] m-auto text-white  h-8 bg-transparent pl-1 w-full outline-none border-b-[2px] focus:border-b-[2px] placeholder:text-zinc-200 border-white focus:border-[#4CC2CA] ease-in-out duration-500 appearance-none focus:outline-none" bind:value={aSource} placeholder="Music Source *Spotify or Youtube link..." />

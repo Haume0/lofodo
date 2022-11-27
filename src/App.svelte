@@ -1,5 +1,7 @@
 <script>
 	import { fade, fly, slide, scale, blur } from "svelte/transition";
+  //const alarm = new Audio("/ALARM.wav");
+  const alarm = new Audio("/bells.wav");
 const luck = [
   'https://open.spotify.com/playlist/37i9dQZF1DX4nNmLlb3JR2?si=8c087adbbf5345ea',
   'https://open.spotify.com/playlist/37i9dQZF1DX3SNr5BeQZSd?si=cd5016d443634ff4',
@@ -68,7 +70,7 @@ let showscr = false
     background:'https://wallpapercave.com/wp/wp7915378.jpg',
     yt: '',
     sp: '',
-    pomodoro: 1500,
+    pomodoro: 15,
     short: 300,
     long: 900,
     auto: true,
@@ -147,7 +149,7 @@ function getSettings(){
   if(timer.sec < 10) timer.sec = '0' + timer.sec;
 
   function start(){
-    if(setting.pomoCount >= setting.longCount){
+    if(setting.pomoCount > setting.longCount && setting.auto == true){
         Mode(setting.long,'long')
         setting.pomoCount = 0
         start()
@@ -186,9 +188,11 @@ function getSettings(){
     // @ts-ignore
     if(timer.sec < 10) timer.sec = '0' + timer.sec;
     if(mode <= 0 && setting.auto == false){
+      alarm.play()
       reset()
     }
     if(mode <= 0 && setting.auto == true){
+      alarm.play()
       if(modebtn == 'pomodoro'){
         setting.pomoCount += 1
         localStorage.setItem('pomoCount', setting.pomoCount.toString());
@@ -320,8 +324,9 @@ function getSettings(){
     }
   }
   if(setting.yt != '' || setting.sp != '') showscr = false
-  //<svg width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M5 19v-5h2v3h3v2Zm0-9V5h5v2H7v3Zm9 9v-2h3v-3h2v5Zm3-9V7h-3V5h5v5Z"/></svg>
+
 </script>
+
 <main class="absolute w-screen noslc flex h-screen !bg-cover !bg-center overflow-hidden bg-black">
   <img src="{setting.background}" alt="" class="absolute w-screen h-screen object-cover blur-[100px]"/>
   <img src="{setting.background}" alt="" class="absolute w-screen h-screen object-contain"/>

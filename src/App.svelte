@@ -70,7 +70,7 @@ let showscr = false
     background:'https://wallpapercave.com/wp/wp7915378.jpg',
     yt: '',
     sp: '',
-    pomodoro: 15,
+    pomodoro: 1500,
     short: 300,
     long: 900,
     auto: true,

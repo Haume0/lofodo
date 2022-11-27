@@ -168,6 +168,7 @@ function getSettings(){
     interval = null
   }
   function reset(){
+    setting.pomoCount = 0
     timer.state = 'Start'
     clearInterval(interval);
     interval = null

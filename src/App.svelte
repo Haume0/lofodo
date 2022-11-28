@@ -367,7 +367,7 @@ function getSettings(){
       </div>{/if}
     </div>
   </div>
-  <div class="absolute sm:hidden md:flex flex-col bg-black/20 p-2 w-auto rounded-xl h-auto right-6 bottom-6">
+  <div class="absolute sm:hidden md:flex flex-col bg-black/20 p-2 w-auto rounded-xl h-auto right-6 bottom-6 z-50">
     <img src="/spicaLofitexed.svg" alt="" class="">
     <span class="text-zinc-300 w-[100%] text-right font-Figtree">A project by <a href="https://github.com/Haume0" target="_blank" rel="noreferrer" class="text-white hover:text-purple-400 w-auto text-right font-medium font-Figtree high">Haume</a>.</span>
     <div class="flex flex-row gap-2 self-end">

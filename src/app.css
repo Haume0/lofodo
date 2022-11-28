@@ -6,7 +6,9 @@ html{
   background-color: #171A21;
 }
 *{
-  color:white
+  color:white;
+  margin: 0px;
+  padding: 0px;
 }
 .noslc{
   -moz-user-select: none;

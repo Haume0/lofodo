@@ -335,7 +335,8 @@ function getSettings(){
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <svg on:click={()=> luckyBG()} class:!hidden={showbg == false} class="hover:fill-violet-500 fill-white ml-2 my-auto" width="18" height="24" viewBox="0 0 448 472"><path d="M399 15Q386 2 369.5 2T340 15L37 316q-13 13-13 30t13 30l30 32q13 13 29.5 13t29.5-13l303-303q13-13 13-30t-13-30zm-91 152l-30-30l89-92l30 30zM67 3Q45 3 45 24v21H24Q3 45 3 67q0 21 21 21h21v21q0 22 22 22q9 0 15-6t6-16V88h21q10 0 16-6t6-15q0-22-22-22H88V24Q88 3 67 3zm298 256q-21 0-21 21v21h-21q-22 0-22 22q0 9 6 15t16 6h21v21q0 10 6 16t15 6q22 0 22-22v-21h21q21 0 21-21q0-22-21-22h-21v-21q0-21-22-21z"/></svg>
   </div>
-  <div class:!translate-y-0={show == true} class:yt_full={fullsc == true} class="absolute noslc z-50 ease-in-out duration-500 md:bottom-10 sm:bottom-4 md:translate-y-[calc(100%+40px)] sm:translate-y-[calc(100%+16px)] w-[90vw] max-w-[440px] min-h-[80px] md:left-10 sm:left-4 flex flex-col gap-1">
+  <div class:!translate-y-0={show == true} class:yt_full={fullsc == true} 
+  class="absolute noslc ease-in-out duration-500 md:bottom-10 sm:bottom-4 md:translate-y-[calc(100%+40px)] sm:translate-y-[calc(100%+16px)] w-[90vw] max-w-[440px] min-h-[80px] md:left-10 sm:left-4 flex flex-col gap-1">
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <div on:click={()=> show = !show} class="absolute left-1/2 right-1/2 -translate-x-1/2 flex place-items-center hover:cursor-pointer justify-items-center z-10 -top-4 self-center bg-black/40 w-12 h-4 rounded-t-xl">
       <svg class:rotate-180={show == true} class="mx-auto fill-white" width="24" height="24" viewBox="0 0 24 24"><path d="m7 14l5-5l5 5Z"/></svg></div>
@@ -366,7 +367,7 @@ function getSettings(){
       </div>{/if}
     </div>
   </div>
-  <div class="absolute sm:hidden md:flex flex-col bg-black/20 p-2 w-auto rounded-xl h-auto right-6 bottom-6 z-50">
+  <div class="absolute sm:hidden md:flex flex-col bg-black/20 p-2 w-auto rounded-xl h-auto right-6 bottom-6">
     <img src="/spicaLofitexed.svg" alt="" class="">
     <span class="text-zinc-300 w-[100%] text-right font-Figtree">A project by <a href="https://github.com/Haume0" target="_blank" rel="noreferrer" class="text-white hover:text-purple-400 w-auto text-right font-medium font-Figtree high">Haume</a>.</span>
     <div class="flex flex-row gap-2 self-end">
@@ -374,7 +375,7 @@ function getSettings(){
       <a href="https://spica.systems" class="text-white hover:text-cyan-400 w-auto text-right font-medium font-Figtree high">Return Spica</a>
     </div>
   </div>
-  <div class="relative m-auto p-2 bg-black/10 rounded-xl">
+  <div class="relative m-auto p-2 bg-black/10 rounded-xl z-50">
     <div class="h-[20px] hover:cursor-pointer mt-2 flex flex-row noslc gap-[2px] place-items-center place-content-center self-center">
       {#if setting.auto == true}
       <svg on:click={()=> chg(-1)} width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M19 12.998H5v-2h14z"/></svg>
@@ -412,6 +413,6 @@ function getSettings(){
     @apply bg-[#CA4C4C] translate-x-0;
   }
   .yt_full{
-    @apply absolute left-0 rounded-none bottom-0 z-10 w-screen h-screen ease-in-out duration-[0ms];
+    @apply absolute left-0 rounded-none bottom-0 z-10 w-screen max-w-none h-screen ease-in-out duration-[0ms];
   }
 </style>

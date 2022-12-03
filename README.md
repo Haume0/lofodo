@@ -1,2 +1,2 @@
-# spica-lofi
- 
+### ☕SpicaLofi ✨
+Project by Haume.

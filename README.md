@@ -1,2 +1,2 @@
 ### ☕SpicaLofi ✨
-Project by Haume.
+Customizable, lo-fi themed pomodoro app.

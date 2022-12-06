@@ -1,2 +1,2 @@
-# spica-lofi
- 
+### ☕SpicaLofi ✨
+Customizable, lo-fi themed pomodoro app.

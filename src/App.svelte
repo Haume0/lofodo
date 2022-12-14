@@ -2,6 +2,8 @@
 	import { fade, fly, slide, scale, blur } from "svelte/transition";
   //const alarm = new Audio("/ALARM.wav");
   const alarm = new Audio("/bells.wav");
+  const click_on = new Audio("/click_on.wav");
+  const click_off = new Audio("/click_off.wav");
 const luck = [
   'https://open.spotify.com/playlist/37i9dQZF1DX4nNmLlb3JR2?si=8c087adbbf5345ea',
   'https://open.spotify.com/playlist/37i9dQZF1DX3SNr5BeQZSd?si=cd5016d443634ff4',
@@ -215,8 +217,10 @@ function getSettings(){
   function startBtn(){
     if(timer.state == 'Start'){
       start()
+      click_on.play()
     }else if(timer.state == 'Pause'){
       pause()
+      click_off.play()
     }
   }
   let aSource = ''

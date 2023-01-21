@@ -1,7 +1,7 @@
 <script>
 	import { fade, fly, slide, scale, blur } from "svelte/transition";
   //const alarm = new Audio("/ALARM.wav");
-  const alarm = new Audio("/bells.wav");
+  const alarm = new Audio("/alarm.wav");
   const click_on = new Audio("/click_on.wav");
   const click_off = new Audio("/click_off.wav");
 const luck = [
@@ -72,7 +72,7 @@ let showscr = false
     background:'https://wallpapercave.com/wp/wp7915378.jpg',
     yt: '',
     sp: '',
-    pomodoro: 1500,
+    pomodoro: 1,
     short: 300,
     long: 900,
     auto: true,
@@ -345,7 +345,7 @@ function getSettings(){
     <div on:click={()=> show = !show} class="absolute left-1/2 right-1/2 -translate-x-1/2 flex place-items-center hover:cursor-pointer justify-items-center z-10 -top-4 self-center bg-black/40 w-12 h-4 rounded-t-xl">
       <svg class:rotate-180={show == true} class="mx-auto fill-white" width="24" height="24" viewBox="0 0 24 24"><path d="m7 14l5-5l5 5Z"/></svg></div>
     {#if setting.yt != ''}<iframe class:yt_full={fullsc == true} class="relative w-full sm:h-[30vh] md:h-[38vh] z-10 rounded-xl" src="{'https://www.youtube.com/embed/'+getId(setting.yt)+'?autoplay=1&controls=1&fs=0'}" title="YT" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>{/if}
-    {#if setting.sp != ''}<iframe class="z-10 " src="{setting.sp.replace('/track','/embed/track').replace('/playlist','/embed/playlist').replace('/episode','/embed/episode').replace('/album','/embed/album')}" width="100%" height="380" frameBorder="0" allowfullscreen="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>{/if}
+    {#if setting.sp != ''}<iframe class="z-10 " about="" src="{setting.sp.replace('/track','/embed/track').replace('/playlist','/embed/playlist').replace('/episode','/embed/episode').replace('/album','/embed/album')}" width="100%" height="380" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>{/if}
     <div class="absolute right-1 top-1 flex flex-row gap-1">
       <!-- svelte-ignore a11y-click-events-have-key-events -->
       {#if true}<div on:click={()=> lucky()} class="relative cursor-pointer z-50 w-6 h-6 justify-center place-items-center flex bg-black/60 rounded-full group">

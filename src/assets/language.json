@@ -1,0 +1,26 @@
+{
+    "en_us":{
+        "start_button":"Start",
+        "pause_button": "Pause",
+        "pomodoro_button": "Pomodoro",
+        "short_button": "Short Break",
+        "long_button": "Long Break",
+        "donate": "Buy me a coffee",
+        "player_header": "Music Source",
+        "player_ph": "Music Source *Spotify or Youtube",
+        "bg_ph" : "Enter an background link.",
+        "lang": "English"
+    },
+    "tr_tr":{
+        "start_button":"Başlat",
+        "pause_button": "Durdur",
+        "pomodoro_button": "Pomodoro",
+        "short_button": "Kısa Mola",
+        "long_button": "Uzun Mola",
+        "donate": "Beni Destekle",
+        "player_header": "Müzik Kaynağı",
+        "player_ph": "Müzik kaynağı gir *Spotify ya da Youtube",
+        "bg_ph" : "Bir arkaplan bağlantısı gir.",
+        "lang": "Türkçe"
+    }
+}

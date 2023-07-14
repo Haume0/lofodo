@@ -19,7 +19,7 @@ interface Isounds {
   bell: HTMLAudioElement
 }
 let sounds :Isounds = {}
-if(!browser){sounds = {}}
+if(!browser){}
 if(browser){
   sounds = {
   start: new Audio('/click_on.wav'),

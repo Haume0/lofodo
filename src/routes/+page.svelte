@@ -18,8 +18,7 @@ interface Isounds {
   pause: HTMLAudioElement
   bell: HTMLAudioElement
 }
-let sounds :Isounds = {}
-if(!browser){}
+let sounds :Isounds
 if(browser){
   sounds = {
   start: new Audio('/click_on.wav'),

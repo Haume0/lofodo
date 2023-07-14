@@ -13,7 +13,12 @@ let options = {
   pomoCount: 0,
   pomoGoal:3,
 };
-let sounds = {}
+interface Isounds {
+  start: HTMLAudioElement
+  pause: HTMLAudioElement
+  bell: HTMLAudioElement
+}
+let sounds :Isounds = {}
 if(!browser){sounds = {}}
 if(browser){
   sounds = {

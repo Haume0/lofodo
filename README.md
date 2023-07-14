@@ -1,2 +1,2 @@
-### ☕SpicaLofi ✨
-Customizable, lo-fi themed pomodoro app.
+### ☕Lofodo ✨
+Customizable, advanced focusing application.

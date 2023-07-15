@@ -1,7 +1,6 @@
 <script lang="ts">
 import classes from 'svelte-transition-classes';
 import { browser } from "$app/environment";
- import { backIn } from "svelte/easing";
 import data from "../data.json";
   import { onMount } from 'svelte';
 let bg = {

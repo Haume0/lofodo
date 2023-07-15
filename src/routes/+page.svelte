@@ -9,7 +9,7 @@ let bg = {
 };
 let options = {
   music: "",
-  pomodoro: 150,
+  pomodoro: 1500,
   sBreak: 300,
   lBreak: 900,
   autoBreak: false,

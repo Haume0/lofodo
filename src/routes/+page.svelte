@@ -116,6 +116,7 @@ onMount(()=>{
   <meta name="copyright" content="Haume">
   <meta name="robots" content="index, follow">
   <meta name="rating" content="general">
+  <meta name="google-site-verification" content="Hk4ZTKRkdpjb-0pw540MAt9OP2lU4iUtxBI-vMj0lrU">
 </svelte:head>
 <div class="relative flex w-screen h-screen items-center justify-center">
   <div

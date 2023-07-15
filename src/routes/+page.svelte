@@ -102,6 +102,7 @@ onMount(()=>{
   bg.current = localStorage.getItem('bg') || data.bg[0]
   options.pomoGoal = JSON.parse(localStorage.getItem('options') || JSON.stringify(options))['pomoGoal']
   options.pomoCount = JSON.parse(localStorage.getItem('options') || JSON.stringify(options))['pomoCount']
+  options.autoBreak = JSON.parse(localStorage.getItem('options') || JSON.stringify(options))['autoBreak']
 })
 </script>
 <svelte:head>
@@ -191,7 +192,7 @@ onMount(()=>{
       </span>
     </section>
     <div class="flex items-center justify-between">
-      <button title="Auto Breaks" on:click={()=>{options.autoBreak = !options.autoBreak}} class="flex border-2 border-white p-[6px] w-32 md:w-48 h-12 md:h-16 rounded-2xl md:rounded-3xl">
+      <button title="Auto Breaks" on:click={()=>{options.autoBreak = !options.autoBreak ; saveOp()}} class="flex border-2 border-white p-[6px] w-32 md:w-48 h-12 md:h-16 rounded-2xl md:rounded-3xl">
         <div class="h-full flex items-center justify-center rounded-xl md:rounded-2xl w-1/2 ease-in-out duration-300 bg-white {!options.autoBreak ? ' translate-x-[100%]':''}">
           <svg class="{options.autoBreak ? 'hidden' : 'block'}" width="14" height="16" viewBox="0 0 14 16" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M2.10864 15.7776C1.64774 16.0573 1.18084 16.0732 0.707951 15.8253C0.235984 15.5784 0 15.1967 0 14.6803V1.32001C0 0.803672 0.235984 0.42158 0.707951 0.173736C1.18084 -0.0732476 1.64774 -0.0568966 2.10864 0.222788L13.3778 6.90296C13.7926 7.16113 14 7.52687 14 8.00018C14 8.47349 13.7926 8.83924 13.3778 9.09741L2.10864 15.7776Z" fill="black"/>

@@ -134,7 +134,7 @@ onMount(()=>{
     />
   </div>
   <main class="absolute left-0 w-full md:w-max md:left-8 bg-black/40 rounded-2xl p-4 top-8">
-    <h1 class="text-6xl font-extrabold text-white">LOFODO {options.autoBreak}</h1>
+    <h1 class="text-6xl font-extrabold text-white">LOFODO</h1>
     <h2 class="text-pink-400 font-thin">A project by 
       <a href="https://github.com/Haume0" target="_blank" class="font-medium hover:underline underline-offset-4" rel="noreferrer">Haume</a>
     </h2>

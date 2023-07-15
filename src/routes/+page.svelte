@@ -50,14 +50,16 @@ let clock = {
       } else {
         if(activeMode == options.sBreak || activeMode == options.lBreak){
           mode = options.pomodoro
-        }else if(options.pomoCount >= options.pomoGoal){
+        }else if(options.pomoCount >= options.pomoGoal && options.autoBreak){
           options.pomoCount = 0
           mode = options.lBreak
           activeMode = mode
         }
-        else{
+        else if(options.autoBreak){
           options.pomoCount++;
           mode = options.sBreak
+        }else{
+          mode = options.pomodoro
         }
         activeMode = mode
         state = false;
@@ -132,7 +134,7 @@ onMount(()=>{
     />
   </div>
   <main class="absolute left-0 w-full md:w-max md:left-8 bg-black/40 rounded-2xl p-4 top-8">
-    <h1 class="text-6xl font-extrabold text-white">LOFODO</h1>
+    <h1 class="text-6xl font-extrabold text-white">LOFODO {options.autoBreak}</h1>
     <h2 class="text-pink-400 font-thin">A project by 
       <a href="https://github.com/Haume0" target="_blank" class="font-medium hover:underline underline-offset-4" rel="noreferrer">Haume</a>
     </h2>
@@ -179,7 +181,7 @@ onMount(()=>{
       >
     </ul>
     <section class="text-center flex flex-col font-bold w-full text-white">
-      <div class="text-base ease-in-out flex items-center flex-col duration-700 overflow-hidden mt-6 {options.autoBreak ? 'h-0 opacity-0':' opacity-100 h-12'}">
+      <div class="text-base ease-in-out flex items-center flex-col duration-700 overflow-hidden mt-6 {!options.autoBreak ? 'h-0 opacity-0':' opacity-100 h-12'}">
         <span class="font-thin text-xs md:text-base">Pomodoro Goal</span>
         <div class="flex text-xs md:text-base">
           <button on:click={()=>{options.pomoGoal <= 0 ? null : options.pomoGoal -= 1 ; saveOp()}} class="select-none mr-2">-</button>
@@ -193,11 +195,11 @@ onMount(()=>{
     </section>
     <div class="flex items-center justify-between">
       <button title="Auto Breaks" on:click={()=>{options.autoBreak = !options.autoBreak ; saveOp()}} class="flex border-2 border-white p-[6px] w-32 md:w-48 h-12 md:h-16 rounded-2xl md:rounded-3xl">
-        <div class="h-full flex items-center justify-center rounded-xl md:rounded-2xl w-1/2 ease-in-out duration-300 bg-white {!options.autoBreak ? ' translate-x-[100%]':''}">
-          <svg class="{options.autoBreak ? 'hidden' : 'block'}" width="14" height="16" viewBox="0 0 14 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <div class="h-full flex items-center justify-center rounded-xl md:rounded-2xl w-1/2 ease-in-out duration-300 bg-white {options.autoBreak ? ' translate-x-[100%]':''}">
+          <svg class="{!options.autoBreak ? 'hidden' : 'block'}" width="14" height="16" viewBox="0 0 14 16" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M2.10864 15.7776C1.64774 16.0573 1.18084 16.0732 0.707951 15.8253C0.235984 15.5784 0 15.1967 0 14.6803V1.32001C0 0.803672 0.235984 0.42158 0.707951 0.173736C1.18084 -0.0732476 1.64774 -0.0568966 2.10864 0.222788L13.3778 6.90296C13.7926 7.16113 14 7.52687 14 8.00018C14 8.47349 13.7926 8.83924 13.3778 9.09741L2.10864 15.7776Z" fill="black"/>
           </svg>
-          <svg class="{!options.autoBreak ? 'hidden' : 'block'}" width="15" height="16" viewBox="0 0 15 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg class="{options.autoBreak ? 'hidden' : 'block'}" width="15" height="16" viewBox="0 0 15 16" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M2.66667 0C1.95942 0 1.28115 0.280951 0.781048 0.781048C0.280951 1.28115 0 1.95942 0 2.66667V13.3333C0 14.0406 0.280951 14.7189 0.781048 15.219C1.28115 15.719 1.95942 16 2.66667 16C3.37391 16 4.05219 15.719 4.55228 15.219C5.05238 14.7189 5.33333 14.0406 5.33333 13.3333V2.66667C5.33333 1.95942 5.05238 1.28115 4.55228 0.781048C4.05219 0.280951 3.37391 0 2.66667 0ZM12 0C11.2928 0 10.6145 0.280951 10.1144 0.781048C9.61429 1.28115 9.33333 1.95942 9.33333 2.66667V13.3333C9.33333 14.0406 9.61429 14.7189 10.1144 15.219C10.6145 15.719 11.2928 16 12 16C12.7072 16 13.3855 15.719 13.8856 15.219C14.3857 14.7189 14.6667 14.0406 14.6667 13.3333V2.66667C14.6667 1.95942 14.3857 1.28115 13.8856 0.781048C13.3855 0.280951 12.7072 0 12 0Z" fill="black"/>
           </svg>
         </div>

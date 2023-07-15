@@ -9,9 +9,9 @@ let bg = {
 };
 let options = {
   music: "",
-  pomodoro: 1,
-  sBreak: 3,
-  lBreak: 9,
+  pomodoro: 150,
+  sBreak: 300,
+  lBreak: 900,
   autoBreak: false,
   pomoCount: 0,
   pomoGoal:3,

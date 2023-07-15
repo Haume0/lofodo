@@ -111,7 +111,8 @@ onMount(()=>{
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Lofodo</title>
-  <meta name="description" content="Gelişmiş bir çalışma stratejisi, dikkatini en iyi şekilde toplaman için bire bir.">
+  <meta name="description" content="An advanced study strategy, one-on-one for your best attention.">
+  <meta name="keywords" content="spica,cubidron,lofi, spica lofi, spicalofi, lofispica, lofodo, pomodoro, lofodo pomodoro, spica lofodo">
   <meta name="author" content="Haume">
   <meta name="copyright" content="Haume">
   <meta name="robots" content="index, follow">

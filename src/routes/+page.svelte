@@ -90,7 +90,8 @@ $: time = {
   min: Math.floor(mode / 60),
 };
 let menu = {
-  background:false
+  background:false,
+  alert:true
 }
 function selectBackground(arg:string){
   bg.current = arg
@@ -105,6 +106,7 @@ onMount(()=>{
   options.pomoGoal = JSON.parse(localStorage.getItem('options') || JSON.stringify(options))['pomoGoal']
   options.pomoCount = JSON.parse(localStorage.getItem('options') || JSON.stringify(options))['pomoCount']
   options.autoBreak = JSON.parse(localStorage.getItem('options') || JSON.stringify(options))['autoBreak']
+  menu.alert = JSON.parse(localStorage.getItem('alert')|| JSON.stringify(true))
 })
 </script>
 <svelte:head>
@@ -142,6 +144,15 @@ onMount(()=>{
     </h2>
     <p class="text-white font-thin">Customizable, advanced focusing application.</p>
   </main>
+  {#if menu.alert == true}
+  <section class="absolute left-0 w-full md:w-max md:left-8 bg-black/40 rounded-2xl p-4 bottom-8">
+    <div class="flex">
+      <p class="text-rose-500 text-sm text-center font-medium">!ATTENTION!</p>
+      <button on:click={()=>{localStorage.setItem('alert',"false");menu.alert = false}} class="text-white text-xs ml-auto mb-2 hover:text-rose-500 ease-in-out duration-200 font-thin">\Don't show this again.</button>
+    </div>
+    <p class="text-white text-xs text-start font-thin">Some browsers may break the timer if it stays in the background for a long time!</p>
+  </section>
+  {/if}
   <section class="absolute right-4 md:right-8 bg-black/40 rounded-2xl p-4 md:top-8 top-12">
     <button on:click={()=>{menu.background = true}} class=" w-6 flex items-center justify-center h-6">
       <svg viewBox="0 0 32 32" class="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -228,16 +239,45 @@ out:classes="{{
   from: 'transform opacity-100',
   to: 'transform opacity-0',
 }}" class="bg-black/40 fixed justify-center flex left-0 top-0 w-full h-full">
-  <section class="relative pt-24 mt-12 grid grid-cols-3 grid-flow-row w-[64rem] h-[90%] gap-4 overflow-hidden overflow-y-scroll bg-black rounded-3xl p-12">
+  <section class="relative pt-24 mt-12 w-[64rem] h-[90%] overflow-hidden bg-black rounded-3xl p-12">
     <div class="absolute left-0 px-12 w-full flex items-center justify-between top-8">
       <h1 class="text-white text-2xl font-bold">Backgrounds</h1>
-      <button class=" text-white" on:click={()=>{menu.background = false}}>\Close</button>
+      <button class=" text-white hover:text-rose-500 ease-in-out duration-200" on:click={()=>{menu.background = false}}>\Close</button>
     </div>
-    {#each bg.all as item}
-    <button on:click={()=>{selectBackground(item);menu.background = false}} class="flex flex-col">
-      <img src={item} loading="lazy" class="w-72 border-2 border-white/0 ease-in-out duration-200 hover:border-white h-44 object-cover object-center rounded-lg" alt="">
-    </button>
-    {/each}
+    <ul class="grid grid-cols-3 grid-flow-row overflow-hidden overflow-y-auto h-full w-full shrink-0 gap-4">
+      {#each bg.all as item}
+      <button on:click={()=>{selectBackground(item);menu.background = false}} class="flex flex-col">
+        <img src={item} loading="lazy" class="w-72 border-2 border-white/0 ease-in-out duration-200 hover:border-white h-44 object-cover object-center rounded-lg" alt="">
+      </button>
+      {/each}
+      <button class="flex text-white items-center justify-center rounded-lg overflow-hidden flex-col bg-zinc-900">
+        <h1 class="text-[10px] md:text-sm text-orange-300">Coming soon!</h1>
+        <h1 class=" sm:text-lg md:text-2xl">Add your own!</h1>
+        <p class=" font-thin text-3xl md:text-6xl">+</p>
+      </button>
+    </ul>
   </section>
 </section>
 {/if}
+
+<style>
+@media (min-width: 640px) {
+}
+@media (min-width: 768px) {
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+}
+/* Track */
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgb(24 24 27);
+  border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+</style>

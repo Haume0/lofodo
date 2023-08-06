@@ -154,7 +154,7 @@ const getId = (url:string) => {
       class="absolute w-full h-full object-cover md:object-contain object-center"
     />
   </div>
-  <section class="col-start-1 col-end-12 md:col-end-4 w-full h-full p-4 row-start-5 md:row-start-4 row-end-7 relative items-end justify-start flex">
+  <section class="col-start-1 col-end-12 md:col-end-5 lg:col-end-4 w-full h-full p-4 row-start-5 lg:row-start-4 row-end-7 relative items-end justify-start flex">
     <section class=" relative w-full md:h-[80%] justify-center items-end shrink-0 flex flex-col bg-black/40 rounded-2xl p-2 md:p-4
     {radio.fullscreen ? '!fixed left-0 top-0 !w-screen !h-screen !p-0':''}">
       <div class="mb-2">
@@ -184,7 +184,7 @@ const getId = (url:string) => {
       <p class="text-white font-thin text-xs">For contact: haume341@outlook.com</p>
     </main>
   </section>
-  <section class="relative w-full h-full hidden md:block col-start-4 col-end-9 row-start-6 p-4 ">
+  <section class="relative w-full h-full hidden md:block lg:col-start-4 lg:col-end-9 col-start-5 col-end-10 row-start-6 p-4 ">
     {#if menu.alert == true}
     <div class="bg-black/60 p-4 rounded-2xl">
       <div class="flex">
@@ -211,14 +211,14 @@ const getId = (url:string) => {
   <section class="relative col-start-1 col-end-12 md:col-start-4 md:col-end-9 items-center justify-center flex row-start-3 row-end-5 md:row-start-2 md:row-end-6 w-full h-full">
     <section
     id="clock"
-    class="bg-black/40 rounded-2xl p-4 md:p-6 w-full h-max relative"
+    class="bg-black/40 rounded-2xl min-w-max p-4 md:p-6 w-full h-max relative"
   >
     <ul class="flex flex-row gap-2 md:gap-4 w-full items-center justify-center">
       <button
         on:click={() => {
           clock.selectMode(options.pomodoro);
         }}
-        class="text-white font-semibold text-sm md:text-lg border-[2px] w-44 h-10 rounded-xl hover:bg-white hover:text-black ease-in-out duration-200 {activeMode ==
+        class="text-white font-semibold text-xs md:text-sm lg:text-base border-[2px] w-28 md:w-32 lg:w-44 h-10 rounded-xl hover:bg-white hover:text-black ease-in-out duration-200 {activeMode ==
         options.pomodoro
           ? 'bg-white !text-black'
           : ''}">Pomodoro</button
@@ -227,7 +227,7 @@ const getId = (url:string) => {
         on:click={() => {
           clock.selectMode(options.sBreak);
         }}
-        class="text-white font-semibold text-sm md:text-lg border-[2px] w-44 h-10 rounded-xl hover:bg-white hover:text-black ease-in-out duration-200 {activeMode ==
+        class="text-white font-semibold text-xs md:text-sm lg:text-base border-[2px] w-28 md:w-32 lg:w-44 h-10 rounded-xl hover:bg-white hover:text-black ease-in-out duration-200 {activeMode ==
         options.sBreak
           ? 'bg-white !text-black'
           : ''}">Short Break</button
@@ -236,7 +236,7 @@ const getId = (url:string) => {
         on:click={() => {
           clock.selectMode(options.lBreak);
         }}
-        class="text-white font-semibold text-sm md:text-lg border-[2px] w-44 h-10 rounded-xl hover:bg-white hover:text-black ease-in-out duration-200 {activeMode ==
+        class="text-white font-semibold text-xs md:text-sm lg:text-base border-[2px] w-28 md:w-32 lg:w-44 h-10 rounded-xl hover:bg-white hover:text-black ease-in-out duration-200 {activeMode ==
         options.lBreak
           ? 'bg-white !text-black'
           : ''}">Long Break</button
@@ -251,11 +251,11 @@ const getId = (url:string) => {
           <button on:click={()=>{options.pomoGoal += 1 ; saveOp()}} class="select-none ml-2">+</button>
         </div>
       </div>
-      <span class="text-[4rem] md:text-[9rem] leading-none mb-4 mt-3 md:mt-5 pointer-events-none ease-in-out duration-300">
+      <span class="text-[4rem] md:text-[6rem] lg:text-[9rem] leading-none mb-4 mt-3 md:mt-5 pointer-events-none ease-in-out duration-300">
         {time.min < 10 ? `0${time.min}` : time.min}:{time.sec < 10? `0${time.sec}`: time.sec}
       </span>
     </section>
-    <div class="flex items-center justify-between">
+    <div class="flex items-center justify-between w-full">
       <button title="Auto Breaks" on:click={()=>{options.autoBreak = !options.autoBreak ; saveOp()}} class="flex border-2 border-white p-[6px] w-32 md:w-48 h-12 md:h-16 rounded-2xl md:rounded-3xl">
         <div class="h-full flex items-center justify-center rounded-xl md:rounded-2xl w-1/2 ease-in-out duration-300 bg-white {options.autoBreak ? ' translate-x-[100%]':''}">
           <svg class="{!options.autoBreak ? 'hidden' : 'block'}" width="14" height="16" viewBox="0 0 14 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -267,7 +267,7 @@ const getId = (url:string) => {
         </div>
       </button>
       <button on:click={()=>{clock.resetTimer() ; clock.pauseTimer()}}>
-        <svg class="hover:rotate-[270deg] ease-in-out duration-500 md:w-12 md:h-12 w-8 h-8" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M40.9428 7.05971C38.4257 4.52311 35.3703 2.58361 32.0021 1.38443C28.6339 0.185245 25.039 -0.242987 21.4829 0.131357C10.4617 1.24109 1.39241 10.179 0.161156 21.1864C-1.49053 35.7329 9.77097 48 23.9755 48C28.5104 48 32.9523 46.7149 36.785 44.2939C40.6178 41.8729 43.684 38.4155 45.6276 34.3232C46.5886 32.3137 45.1471 30.0043 42.9248 30.0043C41.8137 30.0043 40.7626 30.6041 40.2821 31.5939C38.5386 35.3401 35.5564 38.3722 31.8373 40.1803C28.1181 41.9884 23.889 42.462 19.8613 41.5215C13.1945 40.0519 7.81898 34.6232 6.40753 27.9648C5.81422 25.3322 5.82109 22.6 6.42764 19.9704C7.03418 17.3409 8.22488 14.8811 9.91166 12.7731C11.5984 10.6651 13.7382 8.96286 16.1725 7.79219C18.6069 6.62153 21.2736 6.01244 23.9755 6.00996C28.9606 6.00996 33.4051 8.07947 36.6484 11.3487L32.1138 15.8776C30.2218 17.7672 31.5432 21.0064 34.2159 21.0064H44.9969C46.6486 21.0064 48 19.6567 48 18.0071V7.23967C48 4.5703 44.7567 3.22062 42.8648 5.11018L40.9428 7.05971V7.05971Z" fill="white"/></svg>
+        <svg class="hover:rotate-[270deg] ease-in-out duration-500 md:w-10 md:h-10 w-8 h-8 lg:w-12 lg:h-12" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M40.9428 7.05971C38.4257 4.52311 35.3703 2.58361 32.0021 1.38443C28.6339 0.185245 25.039 -0.242987 21.4829 0.131357C10.4617 1.24109 1.39241 10.179 0.161156 21.1864C-1.49053 35.7329 9.77097 48 23.9755 48C28.5104 48 32.9523 46.7149 36.785 44.2939C40.6178 41.8729 43.684 38.4155 45.6276 34.3232C46.5886 32.3137 45.1471 30.0043 42.9248 30.0043C41.8137 30.0043 40.7626 30.6041 40.2821 31.5939C38.5386 35.3401 35.5564 38.3722 31.8373 40.1803C28.1181 41.9884 23.889 42.462 19.8613 41.5215C13.1945 40.0519 7.81898 34.6232 6.40753 27.9648C5.81422 25.3322 5.82109 22.6 6.42764 19.9704C7.03418 17.3409 8.22488 14.8811 9.91166 12.7731C11.5984 10.6651 13.7382 8.96286 16.1725 7.79219C18.6069 6.62153 21.2736 6.01244 23.9755 6.00996C28.9606 6.00996 33.4051 8.07947 36.6484 11.3487L32.1138 15.8776C30.2218 17.7672 31.5432 21.0064 34.2159 21.0064H44.9969C46.6486 21.0064 48 19.6567 48 18.0071V7.23967C48 4.5703 44.7567 3.22062 42.8648 5.11018L40.9428 7.05971V7.05971Z" fill="white"/></svg>
       </button>
       <button on:click={() => {state ? clock.pauseTimer() : clock.startTimer();}} class="md:h-20 h-16 md:w-44 w-36 border-2 border-white ease-in-out duration-300 rounded-3xl text-white text-2xl md:text-3xl font-extrabold {!state? 'bg-white !text-black': ''}">
         {!state ? "Start" : "Pause"}

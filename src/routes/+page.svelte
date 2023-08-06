@@ -138,7 +138,7 @@ const getId = (url:string) => {
   <meta name="rating" content="general">
   <meta name="google-site-verification" content="Hk4ZTKRkdpjb-0pw540MAt9OP2lU4iUtxBI-vMj0lrU">
 </svelte:head>
-<div class="relative grid grid-cols-12 grid-rows-6 w-screen h-screen items-start justify-center">
+<div class="relative grid grid-cols-11 grid-rows-6 w-screen h-screen items-start justify-center">
   <div
     id="background"
     class="w-screen bg-black absolute left-0 top-0 select-none h-[100svh]"
@@ -154,16 +154,16 @@ const getId = (url:string) => {
       class="absolute w-full h-full object-cover md:object-contain object-center"
     />
   </div>
-  <section class="col-start-1 col-end-13 md:col-end-5 w-full h-full p-4 row-start-5 row-end-7 relative items-center justify-center flex">
-    <section class=" relative w-full h-auto md:w-[26rem] md:h-72 justify-center items-end flex flex-col bg-black/40 rounded-2xl p-2 md:p-4
+  <section class="col-start-1 col-end-12 md:col-end-4 w-full h-full p-4 row-start-5 md:row-start-4 row-end-7 relative items-end justify-start flex">
+    <section class=" relative w-full md:h-[80%] justify-center items-end shrink-0 flex flex-col bg-black/40 rounded-2xl p-2 md:p-4
     {radio.fullscreen ? '!fixed left-0 top-0 !w-screen !h-screen !p-0':''}">
-      <div>
-        <button on:click={()=>{radio.fullscreen = !radio.fullscreen}} class="text-white text-xs md:text-sm mb-2 hover:text-sky-400 ease-in-out duration-200 font-thin
+      <div class="mb-2">
+        <button on:click={()=>{radio.fullscreen = !radio.fullscreen}} class="text-white shrink-0 text-xs md:text-sm hover:text-sky-400 ease-in-out duration-200 font-thin
           {radio.fullscreen ? 'absolute left-8 bottom-8 z-50 bg-black/60 backdrop-blur-sm p-4 rounded-md':''}
           ">\{radio.fullscreen ? 'Deactivate':'Activate'} background mode.</button>
       </div>
       <iframe
-          class="relative w-full min-h-[11rem] h-full rounded-xl"
+          class="relative shrink-0 w-full min-h-[11rem] h-full rounded-xl"
           src={"https://www.youtube.com/embed/" +
             getId(radio.current) +
             "?autoplay=0&controls=1&fs=0"}
@@ -174,7 +174,7 @@ const getId = (url:string) => {
         />
     </section>
   </section>
-  <section class="col-start-1 col-end-13 md:col-end-5 w-full h-full p-4 row-start-1 row-end-3 relative">
+  <section class="col-start-1 col-end-12 md:col-end-4 w-full h-full p-4 row-start-1 row-end-3 relative">
     <main class="relative w-full md:w-max bg-black/40 rounded-2xl p-4">
       <h1 class="text-2xl md:text-6xl font-extrabold text-white">LOFODO</h1>
       <h2 class="text-pink-400 font-thin text-sm md:text-base">A project by 
@@ -184,7 +184,7 @@ const getId = (url:string) => {
       <p class="text-white font-thin text-xs">For contact: haume341@outlook.com</p>
     </main>
   </section>
-  <section class="relative w-full h-full hidden md:block col-start-5 col-end-10 row-start-6 p-4">
+  <section class="relative w-full h-full hidden md:block col-start-4 col-end-9 row-start-6 p-4 ">
     {#if menu.alert == true}
     <div class="bg-black/60 p-4 rounded-2xl">
       <div class="flex">
@@ -195,7 +195,7 @@ const getId = (url:string) => {
     </div>
     {/if}
   </section>
-  <section class="col-start-10 col-end-13 w-full h-full row-start-1 row-end-2 flex items-start p-4 justify-end relative">
+  <section class="col-start-10 col-end-12 w-full h-full row-start-1 row-end-2 flex items-start p-4 justify-end relative">
     <section class="flex gap-2 w-max h-max md:bg-black/40 rounded-xl p-2">
       <button on:click={()=>{menu.background = true}} class=" w-8 rounded-lg hover:bg-white/20 p-1 flex items-center justify-center h-8">
         <svg viewBox="0 0 32 32" class="w-5 h-full shrink-0" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -208,7 +208,7 @@ const getId = (url:string) => {
     </section>
 
   </section>
-  <section class="relative col-start-1 col-end-13 md:col-start-5 md:col-end-10 items-center justify-center flex row-start-3 row-end-5 md:row-start-2 md:row-end-6 w-full h-full">
+  <section class="relative col-start-1 col-end-12 md:col-start-4 md:col-end-9 items-center justify-center flex row-start-3 row-end-5 md:row-start-2 md:row-end-6 w-full h-full">
     <section
     id="clock"
     class="bg-black/40 rounded-2xl p-4 md:p-6 w-full h-max relative"

@@ -154,8 +154,8 @@ const getId = (url:string) => {
       class="absolute w-full h-full object-cover md:object-contain object-center"
     />
   </div>
-  <section class="col-start-1 col-end-12 md:col-end-5 lg:col-end-4 w-full h-full p-4 row-start-5 lg:row-start-4 row-end-7 relative items-end justify-start flex">
-    <section class=" relative w-full md:h-[80%] justify-center items-end shrink-0 flex flex-col bg-black/40 rounded-2xl p-2 md:p-4
+  <section class="col-start-1 col-end-12 md:col-end-5 lg:col-end-4 w-full h-full p-4 row-start-5 lg:row-start-4 row-end-7 relative items-end justify-start flex bg-violet-500">
+    <section class=" relative w-full h-max lg:h-full justify-center items-end shrink-0 flex flex-col bg-black/40 rounded-2xl p-2 md:p-4
     {radio.fullscreen ? '!fixed left-0 top-0 !w-screen !h-screen !p-0':''}">
       <div class="mb-2">
         <button on:click={()=>{radio.fullscreen = !radio.fullscreen}} class="text-white shrink-0 text-xs md:text-sm hover:text-sky-400 ease-in-out duration-200 font-thin
@@ -163,7 +163,7 @@ const getId = (url:string) => {
           ">\{radio.fullscreen ? 'Deactivate':'Activate'} background mode.</button>
       </div>
       <iframe
-          class="relative shrink-0 w-full min-h-[11rem] h-full rounded-xl"
+          class="relative shrink-0 w-full lg:min-h-[16rem] h-full rounded-xl"
           src={"https://www.youtube.com/embed/" +
             getId(radio.current) +
             "?autoplay=0&controls=1&fs=0"}

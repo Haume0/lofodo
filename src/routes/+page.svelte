@@ -136,7 +136,7 @@ const getId = (url:string) => {
   <meta name="copyright" content="Haume">
   <meta name="robots" content="index, follow">
   <meta name="rating" content="general">
-  <meta name="google-site-verification" content="Hk4ZTKRkdpjb-0pw540MAt9OP2lU4iUtxBI-vMj0lrU">
+  <meta name="google-site-verification" content="SKzhWRkwSts2scTRHGzh-eV_whkqLNI_bVvLBfoAdnU" />
 </svelte:head>
 <div class="relative grid grid-cols-11 grid-rows-6 w-screen h-screen items-start justify-center">
   <div

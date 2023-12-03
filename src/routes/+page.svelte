@@ -128,6 +128,7 @@ const getId = (url:string) => {
 </script>
 <svelte:head>
   <meta charset="utf-8">
+  <meta name="google-site-verification" content="-CiWWUASZwWHIzOpAltiTwPZRD_WL0DLZRssQ2RYwCE" />
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Lofodo</title>
   <meta name="description" content="An advanced study strategy, one-on-one for your best attention.">
@@ -138,7 +139,7 @@ const getId = (url:string) => {
   <meta name="rating" content="general">
   <meta name="google-site-verification" content="SKzhWRkwSts2scTRHGzh-eV_whkqLNI_bVvLBfoAdnU" />
 </svelte:head>
-<div class="relative grid grid-cols-11 grid-rows-6 w-screen h-screen items-start justify-center">
+<div class="relative grid items-start justify-center w-screen h-screen grid-cols-11 grid-rows-6">
   <div
     id="background"
     class="w-screen bg-black absolute left-0 top-0 select-none h-[100svh]"
@@ -151,10 +152,10 @@ const getId = (url:string) => {
     <img
       src={bg.current}
       alt=""
-      class="absolute w-full h-full object-cover md:object-contain object-center"
+      class="absolute object-cover object-center w-full h-full md:object-contain"
     />
   </div>
-  <section class="col-start-1 col-end-12 md:col-end-5 lg:col-end-4 w-full h-full p-4 row-start-5 lg:row-start-4 row-end-7 relative items-end justify-start flex">
+  <section class="relative flex items-end justify-start w-full h-full col-start-1 col-end-12 row-start-5 row-end-7 p-4 md:col-end-5 lg:col-end-4 lg:row-start-4">
     <section class=" relative w-full h-max lg:h-full justify-center items-end shrink-0 flex flex-col bg-black/40 rounded-2xl p-2 md:p-4
     {radio.fullscreen ? '!fixed left-0 top-0 !w-screen !h-screen !p-0':''}">
       <div class="mb-2">
@@ -174,46 +175,46 @@ const getId = (url:string) => {
         />
     </section>
   </section>
-  <section class="col-start-1 col-end-12 md:col-end-4 w-full h-full p-4 row-start-1 row-end-3 relative">
-    <main class="relative w-full md:w-max bg-black/40 rounded-2xl p-4">
-      <h1 class="text-2xl md:text-6xl font-extrabold text-white">LOFODO</h1>
-      <h2 class="text-pink-400 font-thin text-sm md:text-base">A project by 
+  <section class="relative w-full h-full col-start-1 col-end-12 row-start-1 row-end-3 p-4 md:col-end-4">
+    <main class="relative w-full p-4 md:w-max bg-black/40 rounded-2xl">
+      <h1 class="text-2xl font-extrabold text-white md:text-6xl">LOFODO</h1>
+      <h2 class="text-sm font-thin text-pink-400 md:text-base">A project by 
         <a href="https://github.com/Haume0" target="_blank" class="font-medium hover:underline underline-offset-4" rel="noreferrer">Haume</a>
       </h2>
-      <p class="text-white font-thin text-sm md:text-base">Customizable, advanced focusing application.</p>
-      <p class="text-white font-thin text-xs">For contact: haume341@outlook.com</p>
+      <p class="text-sm font-thin text-white md:text-base">Customizable, advanced focusing application.</p>
+      <p class="text-xs font-thin text-white">For contact: haume341@outlook.com</p>
     </main>
   </section>
-  <section class="relative w-full h-full hidden md:block lg:col-start-4 lg:col-end-9 col-start-5 col-end-10 row-start-6 p-4 ">
+  <section class="relative hidden w-full h-full col-start-5 col-end-10 row-start-6 p-4 md:block lg:col-start-4 lg:col-end-9 ">
     {#if menu.alert == true}
-    <div class="bg-black/60 p-4 rounded-2xl">
+    <div class="p-4 bg-black/60 rounded-2xl">
       <div class="flex">
-        <p class="text-rose-500 text-sm text-center font-medium">!ATTENTION!</p>
-        <button on:click={()=>{localStorage.setItem('alert',"false");menu.alert = false}} class="text-white text-xs ml-auto mb-2 hover:text-rose-500 ease-in-out duration-200 font-thin">\Don't show this again.</button>
+        <p class="text-sm font-medium text-center text-rose-500">!ATTENTION!</p>
+        <button on:click={()=>{localStorage.setItem('alert',"false");menu.alert = false}} class="mb-2 ml-auto text-xs font-thin text-white duration-200 ease-in-out hover:text-rose-500">\Don't show this again.</button>
       </div>
-      <p class="text-white text-xs text-start font-thin">Some browsers may break the timer if it stays in the background for a long time!</p>
+      <p class="text-xs font-thin text-white text-start">Some browsers may break the timer if it stays in the background for a long time!</p>
     </div>
     {/if}
   </section>
-  <section class="col-start-10 col-end-12 w-full h-full row-start-1 row-end-2 flex items-start p-4 justify-end relative">
-    <section class="flex gap-2 w-max h-max md:bg-black/40 rounded-xl p-2">
-      <button on:click={()=>{menu.background = true}} class=" w-8 rounded-lg hover:bg-white/20 p-1 flex items-center justify-center h-8">
+  <section class="relative flex items-start justify-end w-full h-full col-start-10 col-end-12 row-start-1 row-end-2 p-4">
+    <section class="flex gap-2 p-2 w-max h-max md:bg-black/40 rounded-xl">
+      <button on:click={()=>{menu.background = true}} class="flex items-center justify-center w-8 h-8 p-1 rounded-lg  hover:bg-white/20">
         <svg viewBox="0 0 32 32" class="w-5 h-full shrink-0" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M25.5968 20.8001V27.2C25.5968 28.08 24.8769 28.8 23.997 28.8H4.7994C3.91951 28.8 3.1996 28.08 3.1996 27.2V8.00018C3.1996 7.12018 3.91951 6.40019 4.7994 6.40019H9.6308C10.5107 6.40019 11.2306 5.68019 11.2306 4.8002C11.2306 3.92021 10.5107 3.20021 9.6308 3.20021H3.1996C1.43982 3.20021 0 4.6402 0 6.40019V28.8C0 30.56 1.43982 32 3.1996 32H25.5968C27.3566 32 28.7964 30.56 28.7964 28.8V20.8001C28.7964 19.9201 28.0765 19.2001 27.1966 19.2001C26.3167 19.2001 25.5968 19.9201 25.5968 20.8001ZM21.5973 25.6H7.2311C6.55918 25.6 6.19123 24.8321 6.60717 24.3041L9.39083 20.7361C9.46457 20.6417 9.55858 20.565 9.6659 20.5118C9.77323 20.4586 9.89113 20.4302 10.0109 20.4287C10.1307 20.4271 10.2493 20.4525 10.3579 20.503C10.4666 20.5534 10.5625 20.6276 10.6387 20.7201L13.1344 23.7281L16.8939 18.8961C17.2139 18.4801 17.8538 18.4801 18.1577 18.9121L22.2372 24.3361C22.6372 24.8481 22.2532 25.6 21.5973 25.6ZM27.6765 11.0242C28.4444 9.79216 28.8764 8.35217 28.7804 6.76818C28.5724 3.32821 25.8368 0.41623 22.4292 0.0482329C21.4204 -0.0691419 20.3981 0.028292 19.4296 0.334133C18.4612 0.639974 17.5683 1.1473 16.8098 1.82278C16.0513 2.49826 15.4443 3.3266 15.0287 4.25339C14.613 5.18018 14.3982 6.18444 14.3982 7.20018C14.3982 11.1842 17.6138 14.4001 21.5813 14.4001C22.9891 14.4001 24.301 13.9841 25.4048 13.2801L29.2603 17.1361C29.8843 17.7601 30.9081 17.7601 31.5321 17.1361C32.156 16.5121 32.156 15.4881 31.5321 14.8641L27.6765 11.0242ZM21.5973 11.2002C20.5366 11.2002 19.5193 10.7787 18.7692 10.0286C18.0192 9.27845 17.5978 8.26104 17.5978 7.20018C17.5978 6.13932 18.0192 5.12191 18.7692 4.37177C19.5193 3.62163 20.5366 3.20021 21.5973 3.20021C22.658 3.20021 23.6753 3.62163 24.4254 4.37177C25.1754 5.12191 25.5968 6.13932 25.5968 7.20018C25.5968 8.26104 25.1754 9.27845 24.4254 10.0286C23.6753 10.7787 22.658 11.2002 21.5973 11.2002Z" fill="white"/>
         </svg>
       </button>
-      <button on:click={()=>{menu.radio = true}} class=" w-8 rounded-lg hover:bg-white/20 p-1 flex items-center justify-center h-8">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 fill-white h-full shrink-0" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M6.989 4.89a64.248 64.248 0 0 1 10.022 0l2.24.176a2.725 2.725 0 0 1 2.476 2.268c.517 3.09.517 6.243 0 9.332a2.725 2.725 0 0 1-2.475 2.268l-2.24.175a64.24 64.24 0 0 1-10.023 0l-2.24-.175a2.725 2.725 0 0 1-2.476-2.268a28.315 28.315 0 0 1 0-9.332a2.725 2.725 0 0 1 2.475-2.268l2.24-.175ZM10 14.47V9.53a.3.3 0 0 1 .454-.257l4.117 2.47a.3.3 0 0 1 0 .514l-4.117 2.47A.3.3 0 0 1 10 14.47Z" clip-rule="evenodd"/></svg>
+      <button on:click={()=>{menu.radio = true}} class="flex items-center justify-center w-8 h-8 p-1 rounded-lg  hover:bg-white/20">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-full fill-white shrink-0" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M6.989 4.89a64.248 64.248 0 0 1 10.022 0l2.24.176a2.725 2.725 0 0 1 2.476 2.268c.517 3.09.517 6.243 0 9.332a2.725 2.725 0 0 1-2.475 2.268l-2.24.175a64.24 64.24 0 0 1-10.023 0l-2.24-.175a2.725 2.725 0 0 1-2.476-2.268a28.315 28.315 0 0 1 0-9.332a2.725 2.725 0 0 1 2.475-2.268l2.24-.175ZM10 14.47V9.53a.3.3 0 0 1 .454-.257l4.117 2.47a.3.3 0 0 1 0 .514l-4.117 2.47A.3.3 0 0 1 10 14.47Z" clip-rule="evenodd"/></svg>
       </button>
     </section>
 
   </section>
-  <section class="relative col-start-1 col-end-12 md:col-start-4 md:col-end-9 items-center justify-center flex row-start-3 row-end-5 md:row-start-2 md:row-end-6 w-full h-full">
+  <section class="relative flex items-center justify-center w-full h-full col-start-1 col-end-12 row-start-3 row-end-5 md:col-start-4 md:col-end-9 md:row-start-2 md:row-end-6">
     <section
     id="clock"
-    class="bg-black/40 rounded-2xl min-w-max p-4 md:p-6 w-full h-max relative"
+    class="relative w-full p-4 bg-black/40 rounded-2xl min-w-max md:p-6 h-max"
   >
-    <ul class="flex flex-row gap-2 md:gap-4 w-full items-center justify-center">
+    <ul class="flex flex-row items-center justify-center w-full gap-2 md:gap-4">
       <button
         on:click={() => {
           clock.selectMode(options.pomodoro);
@@ -242,13 +243,13 @@ const getId = (url:string) => {
           : ''}">Long Break</button
       >
     </ul>
-    <section class="text-center flex flex-col font-bold w-full text-white">
+    <section class="flex flex-col w-full font-bold text-center text-white">
       <div class="text-base ease-in-out flex items-center flex-col duration-700 overflow-hidden mt-6 {!options.autoBreak ? 'h-0 opacity-0':' opacity-100 h-12'}">
-        <span class="font-thin text-xs md:text-base">Pomodoro Goal</span>
+        <span class="text-xs font-thin md:text-base">Pomodoro Goal</span>
         <div class="flex text-xs md:text-base">
-          <button on:click={()=>{options.pomoGoal <= 0 ? null : options.pomoGoal -= 1 ; saveOp()}} class="select-none mr-2">-</button>
+          <button on:click={()=>{options.pomoGoal <= 0 ? null : options.pomoGoal -= 1 ; saveOp()}} class="mr-2 select-none">-</button>
           <span>{`${options.pomoCount}/${options.pomoGoal}`}</span>
-          <button on:click={()=>{options.pomoGoal += 1 ; saveOp()}} class="select-none ml-2">+</button>
+          <button on:click={()=>{options.pomoGoal += 1 ; saveOp()}} class="ml-2 select-none">+</button>
         </div>
       </div>
       <span class="text-[4rem] md:text-[6rem] lg:text-[9rem] leading-none mb-4 mt-3 md:mt-5 pointer-events-none ease-in-out duration-300">
@@ -291,24 +292,24 @@ out:classes="{{
   to: 'transform opacity-0',
 }}" 
 on:click={()=>{menu.background = false}}
-class="bg-black/40 fixed justify-center flex left-0 top-0 w-full h-full">
+class="fixed top-0 left-0 flex justify-center w-full h-full bg-black/40">
   <section class="relative pt-24 mt-12 w-[64rem] h-[90%] overflow-hidden bg-black rounded-3xl p-12"
   on:click={(e)=>{e.stopPropagation();}}>
-    <div class="absolute left-0 px-12 w-full flex items-center justify-between top-8">
-      <h1 class="text-white text-2xl font-bold">Backgrounds</h1>
-      <button class=" text-white hover:text-rose-500 ease-in-out duration-200" on:click={()=>{menu.background = false}}>\Close</button>
+    <div class="absolute left-0 flex items-center justify-between w-full px-12 top-8">
+      <h1 class="text-2xl font-bold text-white">Backgrounds</h1>
+      <button class="text-white duration-200 ease-in-out  hover:text-rose-500" on:click={()=>{menu.background = false}}>\Close</button>
     </div>
-    <div class="w-full relative mt-6 pb-20 pr-2 h-full overflow-hidden overflow-y-auto">
-      <ul class="grid grid-cols-3 grid-flow-row h-auto w-full gap-4">
+    <div class="relative w-full h-full pb-20 pr-2 mt-6 overflow-hidden overflow-y-auto">
+      <ul class="grid w-full h-auto grid-flow-row grid-cols-3 gap-4">
         {#each bg.all as item}
         <button on:click={()=>{selectBackground(item);menu.background = false}} class="flex group relative flex-col h-40 rounded-lg overflow-hidden border-[1px] ease-in-out duration-200 text-zinc-200 border-zinc-600 hover:border-zinc-400">
-          <img src={item} loading="lazy" class="w-full h-full object-cover object-center rounded-lg" alt="">
+          <img src={item} loading="lazy" class="object-cover object-center w-full h-full rounded-lg" alt="">
         </button>
         {/each}
-        <button class="flex text-white items-center justify-center rounded-lg overflow-hidden flex-col bg-zinc-900">
+        <button class="flex flex-col items-center justify-center overflow-hidden text-white rounded-lg bg-zinc-900">
           <h1 class="text-[10px] md:text-sm text-orange-300">Coming soon!</h1>
           <h1 class=" sm:text-lg md:text-2xl">Add your own!</h1>
-          <p class=" font-thin text-3xl md:text-6xl">+</p>
+          <p class="text-3xl font-thin  md:text-6xl">+</p>
         </button>
       </ul>
     </div>
@@ -329,32 +330,32 @@ out:classes="{{
   to: 'transform opacity-0',
 }}"
 on:click={()=>{menu.radio = false}}
-class="bg-black/40 fixed justify-center flex left-0 top-0 w-full h-full">
+class="fixed top-0 left-0 flex justify-center w-full h-full bg-black/40">
   <section class="relative pt-24 mt-12 w-[64rem] h-[90%] overflow-hidden bg-black rounded-3xl p-12"
   on:click={(e)=>{e.stopPropagation();}}>
-    <div class="absolute left-0 px-12 w-full flex items-center justify-between top-8">
-      <h1 class="text-white text-2xl font-bold">Radios</h1>
-      <button class=" text-white hover:text-rose-500 ease-in-out duration-200" on:click={()=>{menu.radio = false}}>\Close</button>
+    <div class="absolute left-0 flex items-center justify-between w-full px-12 top-8">
+      <h1 class="text-2xl font-bold text-white">Radios</h1>
+      <button class="text-white duration-200 ease-in-out  hover:text-rose-500" on:click={()=>{menu.radio = false}}>\Close</button>
     </div>
-    <div class="w-full h-8 flex gap-2">
+    <div class="flex w-full h-8 gap-2">
       <input type="text" class="bg-transparent border-b-[1px] text-xs md:text-base ease-in-out duration-200 text-zinc-200 border-zinc-600 focus:border-zinc-400 w-full h-full outline outline-transparent"
       bind:value={radio.url}
       placeholder="Use your own youtube url." id="">
       <button on:click={()=>{radio.change(radio.url)}} class="bg-transparent px-4 h-full border-b-[1px] text-sm md:text-base ease-in-out duration-200 text-zinc-200 border-zinc-600 hover:border-zinc-400">\Done</button>
     </div>
-    <div class="w-full relative mt-6 pb-20 pr-2 h-full overflow-hidden overflow-y-auto">
-      <ul class="grid grid-cols-1 md:grid-cols-3 grid-flow-row h-auto w-full gap-4">
+    <div class="relative w-full h-full pb-20 pr-2 mt-6 overflow-hidden overflow-y-auto">
+      <ul class="grid w-full h-auto grid-flow-row grid-cols-1 gap-4 md:grid-cols-3">
         {#each radio.all as item}
         <button on:click={()=>{radio.change(item.link)}} class="flex group relative flex-col h-40 rounded-lg overflow-hidden border-[1px] ease-in-out duration-200 text-zinc-200 border-zinc-600 hover:border-zinc-400">
           <span></span>
-          <img src={`https://i.ytimg.com/vi/${getId(item.link)}/hqdefault.jpg`} loading="lazy" title={item.link} class="w-full group-hover:scale-110 h-full ease-in-out duration-300 object-cover object-center" alt="">
+          <img src={`https://i.ytimg.com/vi/${getId(item.link)}/hqdefault.jpg`} loading="lazy" title={item.link} class="object-cover object-center w-full h-full duration-300 ease-in-out group-hover:scale-110" alt="">
           <h1>{item.name}</h1>
-          <svg class=" absolute inset-0 m-auto w-16 pointer-events-none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 180"><path fill="red" d="M250.346 28.075A32.18 32.18 0 0 0 227.69 5.418C207.824 0 127.87 0 127.87 0S47.912.164 28.046 5.582A32.18 32.18 0 0 0 5.39 28.24c-6.009 35.298-8.34 89.084.165 122.97a32.18 32.18 0 0 0 22.656 22.657c19.866 5.418 99.822 5.418 99.822 5.418s79.955 0 99.82-5.418a32.18 32.18 0 0 0 22.657-22.657c6.338-35.348 8.291-89.1-.164-123.134Z"/><path fill="#FFF" d="m102.421 128.06l66.328-38.418l-66.328-38.418z"/></svg>
+          <svg class="absolute inset-0 w-16 m-auto pointer-events-none " xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 180"><path fill="red" d="M250.346 28.075A32.18 32.18 0 0 0 227.69 5.418C207.824 0 127.87 0 127.87 0S47.912.164 28.046 5.582A32.18 32.18 0 0 0 5.39 28.24c-6.009 35.298-8.34 89.084.165 122.97a32.18 32.18 0 0 0 22.656 22.657c19.866 5.418 99.822 5.418 99.822 5.418s79.955 0 99.82-5.418a32.18 32.18 0 0 0 22.657-22.657c6.338-35.348 8.291-89.1-.164-123.134Z"/><path fill="#FFF" d="m102.421 128.06l66.328-38.418l-66.328-38.418z"/></svg>
         </button>
         {/each}
       </ul>
     </div>
-    <div class=" absolute bottom-0 w-full h-20 bg-gradient-to-t from-black via-black to-black/20"></div>
+    <div class="absolute bottom-0 w-full h-20  bg-gradient-to-t from-black via-black to-black/20"></div>
   </section>
 </section>
 {/if}

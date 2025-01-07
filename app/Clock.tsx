@@ -7,9 +7,9 @@ type Mode = "pomodoro" | "shortBreak" | "longBreak";
 
 export default function Clock() {
   const minutes: Record<Mode, number> = {
-    pomodoro: 1,
-    shortBreak: 1,
-    longBreak: 1,
+    pomodoro: 25,
+    shortBreak: 5,
+    longBreak: 15,
   };
   const [auto, setAuto] = useState({
     state: false,

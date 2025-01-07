@@ -1,5 +1,4 @@
 import "./globals.css";
-import "./elements.css";
 import Head from "next/head";
 
 import { JetBrains_Mono, Lato } from "next/font/google";
@@ -40,7 +39,8 @@ export default function RootLayout({
         <meta name="rating" content="general" />
       </Head>
       <body
-        className={`${lato.variable} ${lato.variable} ${jetbrainsMono.variable} antialiased`}>
+        className={`${lato.variable} ${lato.variable} ${jetbrainsMono.variable} antialiased`}
+      >
         {children}
       </body>
     </html>

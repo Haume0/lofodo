@@ -18,6 +18,8 @@ const useBackground = create<IBackgroundActions>((set) => ({
   toggle: () => set((state) => ({ state: !state.state })),
   setGift: (gif: string) => set({ gif }),
   togglePowerMode: () => {
+    //only client side
+    if (typeof window === "undefined") return;
     set((state) => {
       localStorage.setItem(
         "backgroundPowerMode",

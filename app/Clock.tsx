@@ -12,14 +12,22 @@ export default function Clock() {
     longBreak: 15,
   };
   const [auto, setAuto] = useState(() => {
-    const storedAuto = localStorage.getItem("auto");
-    return storedAuto
-      ? JSON.parse(storedAuto)
-      : {
-          state: false,
-          goal: 2,
-          current: 0,
-        };
+    if (typeof window !== "undefined") {
+      const storedAuto = localStorage.getItem("auto");
+      return storedAuto
+        ? JSON.parse(storedAuto)
+        : {
+            state: false,
+            goal: 2,
+            current: 0,
+          };
+    } else {
+      return {
+        state: false,
+        goal: 2,
+        current: 0,
+      };
+    }
   });
   const [mode, setMode] = useState<Mode>("pomodoro");
   const [clock, setClock] = useState({
@@ -28,7 +36,7 @@ export default function Clock() {
   });
   const [isRunning, setIsRunning] = useState(false);
   const [remainingTime, setRemainingTime] = useState(
-    minutes["pomodoro"] * 60 * 1000,
+    minutes["pomodoro"] * 60 * 1000
   );
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   const alarm = globalThis.window && new Audio("/alarm.wav");
@@ -85,7 +93,7 @@ export default function Clock() {
         const newRemainingTime = endTime - currentTime;
         setRemainingTime(newRemainingTime);
         const minutes = Math.floor(
-          (newRemainingTime % (1000 * 60 * 60)) / (1000 * 60),
+          (newRemainingTime % (1000 * 60 * 60)) / (1000 * 60)
         );
         const seconds = Math.floor((newRemainingTime % (1000 * 60)) / 1000);
         setClock({ Minute: minutes, Second: seconds });
@@ -138,10 +146,10 @@ export default function Clock() {
             (currentTime - parseInt(storedStartTime, 10));
           setRemainingTime(newRemainingTime);
           const minutesRemaining = Math.floor(
-            (newRemainingTime % (1000 * 60 * 60)) / (1000 * 60),
+            (newRemainingTime % (1000 * 60 * 60)) / (1000 * 60)
           );
           const secondsRemaining = Math.floor(
-            (newRemainingTime % (1000 * 60)) / 1000,
+            (newRemainingTime % (1000 * 60)) / 1000
           );
           setClock({ Minute: minutesRemaining, Second: secondsRemaining });
 
@@ -174,25 +182,27 @@ export default function Clock() {
       <motion.div
         layoutId="ehe"
         layout="size"
-        className="min-w-96 w-full bgblur-4 relative z-10 max-w-[36rem] size-max p-2 flex flex-col gap-2 rounded-2xl bg-black/20 border-[1px] border-black/20"
-      >
+        className="min-w-96 w-full bgblur-4 relative z-10 max-w-[36rem] size-max p-2 flex flex-col gap-2 rounded-2xl bg-black/20 border-[1px] border-black/20">
         <motion.span layout="position" className="flex w-full gap-2">
           <button
             onClick={() => handleModeChange("pomodoro")}
-            className={`px-6 h-12 text-xl font-jetbrains-mono flex items-center justify-center bg-white/5 hover:bg-white/10 border-[1px] border-transparent ease-in-out duration-300 hover:border-white/20 rounded-xl ${mode == "pomodoro" && "!bg-white/20 !border-white/20"}`}
-          >
+            className={`px-6 h-12 text-xl font-jetbrains-mono flex items-center justify-center bg-white/5 hover:bg-white/10 border-[1px] border-transparent ease-in-out duration-300 hover:border-white/20 rounded-xl ${
+              mode == "pomodoro" && "!bg-white/20 !border-white/20"
+            }`}>
             Pomodoro
           </button>
           <button
             onClick={() => handleModeChange("shortBreak")}
-            className={`px-6 h-12 text-xl font-jetbrains-mono flex items-center justify-center bg-white/5 hover:bg-white/10 border-[1px] border-transparent ease-in-out duration-300 hover:border-white/20 rounded-xl ${mode == "shortBreak" && "!bg-white/20 !border-white/20"}`}
-          >
+            className={`px-6 h-12 text-xl font-jetbrains-mono flex items-center justify-center bg-white/5 hover:bg-white/10 border-[1px] border-transparent ease-in-out duration-300 hover:border-white/20 rounded-xl ${
+              mode == "shortBreak" && "!bg-white/20 !border-white/20"
+            }`}>
             Short Break
           </button>
           <button
             onClick={() => handleModeChange("longBreak")}
-            className={`px-6 h-12 text-xl font-jetbrains-mono flex items-center justify-center bg-white/5 hover:bg-white/10 border-[1px] border-transparent ease-in-out duration-300 hover:border-white/20 rounded-xl ${mode == "longBreak" && "!bg-white/20 !border-white/20"}`}
-          >
+            className={`px-6 h-12 text-xl font-jetbrains-mono flex items-center justify-center bg-white/5 hover:bg-white/10 border-[1px] border-transparent ease-in-out duration-300 hover:border-white/20 rounded-xl ${
+              mode == "longBreak" && "!bg-white/20 !border-white/20"
+            }`}>
             Long Break
           </button>
         </motion.span>
@@ -204,8 +214,7 @@ export default function Clock() {
               animate={{ opacity: 1, maxHeight: 56 }}
               exit={{ opacity: 0, maxHeight: 0 }}
               transition={{ duration: 0.5 }}
-              className="flex gap-1 items-center justify-center w-full"
-            >
+              className="flex gap-1 items-center justify-center w-full">
               <button
                 onClick={() => {
                   setAuto({
@@ -213,13 +222,11 @@ export default function Clock() {
                     current: 0,
                   });
                 }}
-                className="size-8 group flex items-center justify-center bg-white/5 hover:bg-white/10 border-[1px] border-transparent ease-in-out duration-300 hover:border-white/20 rounded-lg"
-              >
+                className="size-8 group flex items-center justify-center bg-white/5 hover:bg-white/10 border-[1px] border-transparent ease-in-out duration-300 hover:border-white/20 rounded-lg">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className={`h-4 ease-smooth group-active:rotate-[-360deg] duration-700 group-active:transition-none`}
-                  viewBox="0 0 512 512"
-                >
+                  viewBox="0 0 512 512">
                   <path
                     d="M433 288.8c-7.7 0-14.3 5.9-14.9 13.6-6.9 83.1-76.8 147.9-161.8 147.9-89.5 0-162.4-72.4-162.4-161.4 0-87.6 70.6-159.2 158.2-161.4 2.3-.1 4.1 1.7 4.1 4v50.3c0 12.6 13.9 20.2 24.6 13.5L377 128c10-6.3 10-20.8 0-27.1l-96.1-66.4c-10.7-6.7-24.6.9-24.6 13.5v45.7c0 2.2-1.7 4-3.9 4C148 99.8 64 184.6 64 288.9 64 394.5 150.1 480 256.3 480c100.8 0 183.4-76.7 191.6-175.1.8-8.7-6.2-16.1-14.9-16.1z"
                     fill="currentColor"
@@ -247,8 +254,7 @@ export default function Clock() {
                     });
                   }
                 }}
-                className="size-8 flex items-center justify-center bg-white/5 hover:bg-white/10 border-[1px] border-transparent ease-in-out duration-300 hover:border-white/20 rounded-lg"
-              >
+                className="size-8 flex items-center justify-center bg-white/5 hover:bg-white/10 border-[1px] border-transparent ease-in-out duration-300 hover:border-white/20 rounded-lg">
                 -
               </button>
               <p className=" font-jetbrains-mono pointer-events-none text-lg font-extralight">
@@ -261,8 +267,7 @@ export default function Clock() {
                     goal: auto.goal + 1,
                   });
                 }}
-                className="size-8 flex items-center justify-center bg-white/5 hover:bg-white/10 border-[1px] border-transparent ease-in-out duration-300 hover:border-white/20 rounded-lg"
-              >
+                className="size-8 flex items-center justify-center bg-white/5 hover:bg-white/10 border-[1px] border-transparent ease-in-out duration-300 hover:border-white/20 rounded-lg">
                 +
               </button>
               <button
@@ -272,8 +277,7 @@ export default function Clock() {
                     ...auto,
                     current: auto.current + 1,
                   });
-                }}
-              >
+                }}>
                 C+
               </button>
             </motion.span>
@@ -281,8 +285,7 @@ export default function Clock() {
         </AnimatePresence>
         <motion.span
           layout="position"
-          className="flex pointer-events-none -space-x-2 mx-auto"
-        >
+          className="flex pointer-events-none -space-x-2 mx-auto">
           <h1 className=" font-jetbrains-mono text-9xl font-extrabold tracking-[-0.6rem]">
             {clock.Minute < 10 ? `0${clock.Minute}` : clock.Minute}
           </h1>
@@ -295,8 +298,7 @@ export default function Clock() {
         </motion.span>
         <motion.span
           layout="position"
-          className="flex justify-center w-full gap-2"
-        >
+          className="flex justify-center w-full gap-2">
           <button
             onClick={() => {
               setAuto({
@@ -304,8 +306,9 @@ export default function Clock() {
                 state: !auto.state,
               });
             }}
-            className={`h-16 w-28 rounded-[1.5rem] p-1 flex bg-white/5 hover:bg-white/10 border-[2px] border-transparent ease-in-out duration-300 hover:border-white/20 ${auto.state ? "justify-end" : ""}`}
-          >
+            className={`h-16 w-28 rounded-[1.5rem] p-1 flex bg-white/5 hover:bg-white/10 border-[2px] border-transparent ease-in-out duration-300 hover:border-white/20 ${
+              auto.state ? "justify-end" : ""
+            }`}>
             <motion.div
               layout
               transition={{
@@ -313,18 +316,15 @@ export default function Clock() {
                 damping: 30,
                 stiffness: 450,
               }}
-              className="h-full rounded-[1.2rem] aspect-square bg-white"
-            ></motion.div>
+              className="h-full rounded-[1.2rem] aspect-square bg-white"></motion.div>
           </button>
           <button
             onClick={resetTimer}
-            className={`size-16 text-3xl font-jetbrains-mono flex group items-center justify-center bg-white/5 hover:bg-white/10 border-[2px] border-transparent ease-in-out duration-300 hover:border-white/20 rounded-[1.5rem]`}
-          >
+            className={`size-16 text-3xl font-jetbrains-mono flex group items-center justify-center bg-white/5 hover:bg-white/10 border-[2px] border-transparent ease-in-out duration-300 hover:border-white/20 rounded-[1.5rem]`}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className={`h-9 ease-smooth group-active:rotate-[-360deg] duration-700 group-active:transition-none`}
-              viewBox="0 0 512 512"
-            >
+              viewBox="0 0 512 512">
               <path
                 d="M433 288.8c-7.7 0-14.3 5.9-14.9 13.6-6.9 83.1-76.8 147.9-161.8 147.9-89.5 0-162.4-72.4-162.4-161.4 0-87.6 70.6-159.2 158.2-161.4 2.3-.1 4.1 1.7 4.1 4v50.3c0 12.6 13.9 20.2 24.6 13.5L377 128c10-6.3 10-20.8 0-27.1l-96.1-66.4c-10.7-6.7-24.6.9-24.6 13.5v45.7c0 2.2-1.7 4-3.9 4C148 99.8 64 184.6 64 288.9 64 394.5 150.1 480 256.3 480c100.8 0 183.4-76.7 191.6-175.1.8-8.7-6.2-16.1-14.9-16.1z"
                 fill="currentColor"
@@ -336,8 +336,7 @@ export default function Clock() {
             className={`w-40 h-16 text-3xl font-jetbrains-mono flex items-center justify-center bg-white/5 hover:bg-white/10 border-[2px] border-transparent ease-in-out duration-300 hover:border-white/20 rounded-[1.5rem] ${
               isRunning &&
               "!bg-blue-500/20 hover:!bg-yellow-500/30 hover:!border-yellow-500/30 group/running"
-            }`}
-          >
+            }`}>
             <span className="group-hover/running:hidden">
               {isRunning ? "Ticking" : "Start"}
             </span>

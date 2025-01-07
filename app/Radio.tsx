@@ -1,7 +1,7 @@
 "use client";
 import useBackground from "@/store/background";
 import { AnimatePresence, motion } from "motion/react";
-import { FormEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 function urlToEmbed(url: string) {
   const videoId = url.split("v=")[1];
   return `https://www.youtube.com/embed/${videoId}?si=jMY8kVmD5WQiQ6aP`;

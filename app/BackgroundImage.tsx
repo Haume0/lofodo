@@ -1,7 +1,7 @@
 "use client";
 import { Background } from "@/actions/backgrounds";
 import useBackground from "@/store/background";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 export default function BackgroundImage(props: { backgrounds: Background[] }) {
   const background = useBackground();
   const randomBackground = () =>

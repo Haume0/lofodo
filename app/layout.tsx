@@ -1,5 +1,4 @@
 import "./globals.css";
-import Head from "next/head";
 
 import { JetBrains_Mono, Lato } from "next/font/google";
 

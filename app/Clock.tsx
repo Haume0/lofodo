@@ -11,10 +11,15 @@ export default function Clock() {
     shortBreak: 5,
     longBreak: 15,
   };
-  const [auto, setAuto] = useState({
-    state: false,
-    goal: 2,
-    current: 0,
+  const [auto, setAuto] = useState(() => {
+    const storedAuto = localStorage.getItem("auto");
+    return storedAuto
+      ? JSON.parse(storedAuto)
+      : {
+          state: false,
+          goal: 2,
+          current: 0,
+        };
   });
   const [mode, setMode] = useState<Mode>("pomodoro");
   const [clock, setClock] = useState({
@@ -153,16 +158,16 @@ export default function Clock() {
     return () => clearInterval(timerRef.current!);
   }, [mode]);
 
+  useEffect(() => {
+    localStorage.setItem("auto", JSON.stringify(auto));
+  }, [auto]);
+
   const handleModeChange = (newMode: Mode) => {
     setMode(newMode);
     resetTimer();
     setClock({ Minute: minutes[newMode], Second: 0 });
     setRemainingTime(minutes[newMode] * 60 * 1000);
   };
-  //Save the values to local storage
-  useEffect(() => {
-    localStorage.setItem("auto", JSON.stringify(auto));
-  }, [auto]);
 
   return (
     <>

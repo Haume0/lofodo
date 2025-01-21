@@ -1,7 +1,6 @@
 "use client";
 
 import { removeRadio } from "@/actions/radios";
-import { revalidatePath } from "next/cache";
 
 export default function RemoveRadioButton(props: { url: string }) {
   return (

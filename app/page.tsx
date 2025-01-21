@@ -1,9 +1,9 @@
 import { getBackground } from "@/actions/backgrounds";
 import Image from "next/image";
-import Radio from "./Radio";
+import Radio from "../components/Radio";
 import { getRadios } from "@/actions/radios";
-import Clock from "./Clock";
-import BackgroundImage from "./BackgroundImage";
+import Clock from "../components/Clock";
+import BackgroundImage from "../components/BackgroundImage";
 
 export default async function Home() {
   const backgrounds = await getBackground();

@@ -3,7 +3,7 @@ import fs from "fs/promises";
 import crypto from "crypto";
 
 const salt = "me.haume.lofodo.app_duz_anthr";
-const usersPath = "./data/users.json";
+const usersPath = "data/users.json";
 let tokenExpiryTime = 60000; // Global variable for token expiry time
 
 export interface IUserAuth {

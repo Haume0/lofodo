@@ -46,7 +46,7 @@ function Login() {
         className="px-3 w-full bgblur-4 rounded-xl h-10 bg-white/10 focus:bg-white/20 border-[1px] border-transparent ease-in-out focus:border-white/20 outline-none duration-300"
       />
       <input
-        type="text"
+        type="password"
         name="password"
         placeholder="Enter password."
         className="px-3 w-full bgblur-4 rounded-xl h-10 bg-white/10 focus:bg-white/20 border-[1px] border-transparent ease-in-out focus:border-white/20 outline-none duration-300"

@@ -1,7 +1,7 @@
 "use server";
-import { checkToken, checkUser } from "@/auth";
+import { checkToken } from "@/auth";
 import fs from "fs";
-import { Fustat } from "next/font/google";
+import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 
 export async function getRadios(): Promise<string[]> {
@@ -22,6 +22,7 @@ export async function updateRadio(
   const index = radios.findIndex((item) => item == old_url);
   radios[index] = new_url;
   fs.writeFileSync("data/radios.json", JSON.stringify(radios));
+  revalidatePath("/admin");
   return true;
 }
 
@@ -33,6 +34,7 @@ export async function addRadio(url: string): Promise<boolean> {
   );
   radios.push(url);
   fs.writeFileSync("data/radios.json", JSON.stringify(radios));
+  revalidatePath("/admin");
   return true;
 }
 export async function removeRadio(rm_url: string): Promise<boolean> {
@@ -45,5 +47,6 @@ export async function removeRadio(rm_url: string): Promise<boolean> {
   const index = radios.findIndex((item) => item == rm_url);
   radios.splice(index, 1);
   fs.writeFileSync("data/radios.json", JSON.stringify(radios));
+  revalidatePath("/admin");
   return true;
 }

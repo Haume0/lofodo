@@ -4,7 +4,7 @@ import crypto from "crypto";
 
 const salt = "me.haume.lofodo.app_duz_anthr";
 const usersPath = "data/users.json";
-let tokenExpiryTime = 60000; // Global variable for token expiry time
+let tokenExpiryTime = 10 * 60000; // Global variable for token expiry time
 
 export interface IUserAuth {
   name: string;
@@ -39,6 +39,10 @@ export async function checkUser(
 export async function checkToken(
   token: string,
 ): Promise<[boolean, IUser | null]> {
+  //checking for the token structure
+  if (!token.includes("_") && !token.includes(":")) {
+    return [false, null];
+  }
   const users = await getUsers();
   const [hash, tokenData] = token.split("_");
   const [username, exp] = tokenData.split(":");

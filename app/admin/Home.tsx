@@ -17,7 +17,7 @@ export default async function Home() {
       <div className="flex gap-2 bg-white/10 rounded-3xl border-[1px] border-white/20 p-4 justify-between w-[28rem]">
         <span>
           <p className="text-base text-purple-500 font-light">Welcome,</p>
-          <h1 className="text-lg font-semibold">{user.name}</h1>
+          <h1 className="text-2xl font-black">{user.name}</h1>
         </span>
         <button
           className="hover:bg-red-500/10 hover:text-red-500 border-[1px] border-transparent ease-smooth duration-300 hover:border-red-500/20 px-4 py-1 size-max rounded-full"

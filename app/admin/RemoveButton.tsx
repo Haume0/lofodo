@@ -7,7 +7,7 @@ export default function RemoveRadioButton(props: { url: string }) {
   return (
     <button
       onClick={async () => {
-        const res = await removeRadio(props.url);
+        await removeRadio(props.url);
         revalidatePath("/admin");
       }}
       type="button"

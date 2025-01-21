@@ -2,7 +2,6 @@ import { addRadio, getRadios, updateRadio } from "@/actions/radios";
 import { checkToken } from "@/auth";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
-import AdminRadios from "./Radios";
 import RemoveRadioButton from "./RemoveButton";
 
 export default async function Home() {
@@ -10,6 +9,9 @@ export default async function Home() {
   const user = (await checkToken((await cookies()).get("hwt")?.value || ""))[1];
   //Radios
   const radios = await getRadios();
+  if (!user) {
+    return <h1>Unauthorized</h1>;
+  }
   return (
     <>
       <div className="flex gap-2 bg-white/10 rounded-3xl border-[1px] border-white/20 p-4 justify-between w-[28rem]">
@@ -34,7 +36,8 @@ export default async function Home() {
           action={async (e) => {
             "use server";
             const add_url = e.get("add_url")?.toString() || "";
-            const res = addRadio(add_url);
+            await addRadio(add_url);
+            revalidatePath("/admin");
           }}
           className="flex"
         >
@@ -58,7 +61,8 @@ export default async function Home() {
                 "use server";
                 const old_url = e.get("old_url")?.toString() || "";
                 const new_url = e.get("new_url")?.toString() || "";
-                const res = updateRadio(old_url, new_url);
+                await updateRadio(old_url, new_url);
+                revalidatePath("/admin");
               }}
               key={index}
               className="flex"
@@ -77,7 +81,7 @@ export default async function Home() {
               >
                 Modify
               </button>
-              <RemoveRadioButton />
+              <RemoveRadioButton url={item} />
             </form>
           ))}
         </ul>

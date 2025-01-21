@@ -4,7 +4,7 @@ import { cookies } from "next/headers";
 import Home from "./Home";
 
 export default async function page() {
-  let isLoggedIn = (
+  const isLoggedIn = (
     await checkToken((await cookies()).get("hwt")?.value || "")
   )[0];
   console.log(isLoggedIn);

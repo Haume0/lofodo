@@ -7,7 +7,7 @@ export interface Background {
 }
 export async function getBackground() {
   //reading public/backgrounds
-  const backgrounds = await fs.readdirSync("public/backgrounds");
+  const backgrounds = fs.readdirSync("public/backgrounds");
   const data: Background[] = backgrounds.map((background) => {
     return {
       name: background.split(".")[0],

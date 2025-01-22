@@ -8,6 +8,8 @@ import BackgroundImage from "../components/BackgroundImage";
 export default async function Home() {
   const backgrounds = await getBackground();
   const radios = await getRadios();
+  console.log(radios);
+  console.log(backgrounds);
   return (
     <div className="relative flex flex-col p-2 sm:p-4 md:p-8 h-screen max-h-screen max-w-full">
       <BackgroundImage backgrounds={backgrounds} />

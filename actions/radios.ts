@@ -5,8 +5,9 @@ import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 
 export async function getRadios(): Promise<string[]> {
-  const radios = fs.readFileSync("data/radios.json", "utf-8");
-  return JSON.parse(radios);
+  const radiosData = fs.readFileSync("data/radios.json", "utf-8");
+  const radios = JSON.parse(radiosData);
+  return radios;
 }
 
 export async function updateRadio(
@@ -22,7 +23,7 @@ export async function updateRadio(
   const index = radios.findIndex((item) => item == old_url);
   radios[index] = new_url;
   fs.writeFileSync("data/radios.json", JSON.stringify(radios));
-  revalidatePath("/admin");
+  revalidatePath("/");
   return true;
 }
 
@@ -34,7 +35,7 @@ export async function addRadio(url: string): Promise<boolean> {
   );
   radios.push(url);
   fs.writeFileSync("data/radios.json", JSON.stringify(radios));
-  revalidatePath("/admin");
+  revalidatePath("/");
   return true;
 }
 export async function removeRadio(rm_url: string): Promise<boolean> {
@@ -47,6 +48,6 @@ export async function removeRadio(rm_url: string): Promise<boolean> {
   const index = radios.findIndex((item) => item == rm_url);
   radios.splice(index, 1);
   fs.writeFileSync("data/radios.json", JSON.stringify(radios));
-  revalidatePath("/admin");
+  revalidatePath("/");
   return true;
 }

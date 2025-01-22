@@ -7,7 +7,6 @@ export default async function page() {
   const isLoggedIn = (
     await checkToken((await cookies()).get("hwt")?.value || "")
   )[0];
-  console.log(isLoggedIn);
   return (
     <section className="p-16 flex flex-col gap-4 relative items-center min-h-svh justify-center">
       {!isLoggedIn ? <Login /> : <Home />}
@@ -22,18 +21,14 @@ function Login() {
         "use server";
         const username = e.get("username")?.toString() || "";
         const password = e.get("password")?.toString() || "";
-        console.log(`Username: ${username}`);
-        console.log(`Password: ${password}`);
         const [result, hash] = await checkUser({
           name: username,
           password: password,
         });
-        console.log(`Result: ${result}`);
-        console.log(`Hash: ${hash}`);
         if (result) {
           //add hash to cookie hwt=hash
           (await cookies()).set("hwt", hash);
-          revalidatePath("/admin");
+          revalidatePath("/");
         }
       }}
       className="flex flex-col w-[28rem] relative gap-2"

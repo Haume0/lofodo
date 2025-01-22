@@ -24,7 +24,7 @@ export default async function Home() {
           onClick={async () => {
             "use server";
             (await cookies()).delete("hwt");
-            revalidatePath("/admin");
+            revalidatePath("/");
           }}
         >
           Logout
@@ -37,7 +37,7 @@ export default async function Home() {
             "use server";
             const add_url = e.get("add_url")?.toString() || "";
             await addRadio(add_url);
-            revalidatePath("/admin");
+            revalidatePath("/");
           }}
           className="flex"
         >
@@ -62,7 +62,7 @@ export default async function Home() {
                 const old_url = e.get("old_url")?.toString() || "";
                 const new_url = e.get("new_url")?.toString() || "";
                 await updateRadio(old_url, new_url);
-                revalidatePath("/admin");
+                revalidatePath("/");
               }}
               key={index}
               className="flex"

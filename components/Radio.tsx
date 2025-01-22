@@ -98,9 +98,12 @@ export default function Radio(props: { radios: string[] }) {
                       const currentIndex = props.radios.findIndex(
                         (radio) => urlToEmbed(radio) === url,
                       );
-                      const nextIndex =
-                        (currentIndex + 1) % props.radios.length;
-                      setUrl(urlToEmbed(props.radios[nextIndex]));
+                      const nextIndex = currentIndex + 1;
+                      if (nextIndex < props.radios.length) {
+                        setUrl(urlToEmbed(props.radios[nextIndex]));
+                      } else {
+                        setUrl(urlToEmbed(props.radios[0]));
+                      }
                     } else {
                       setUrl(
                         urlToEmbed(

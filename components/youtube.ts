@@ -21,6 +21,11 @@ export interface YTPlayer {
   loadVideoById(videoId: string): void;
   cueVideoById(videoId: string): void;
   getPlayerState(): number;
+  getCurrentTime(): number;
+  getDuration(): number;
+  seekTo(seconds: number, allowSeekAhead: boolean): void;
+  // Not in the official docs, but exposed by the player.
+  getVideoData?(): { video_id?: string; isLive?: boolean };
   destroy(): void;
 }
 
@@ -80,4 +85,12 @@ export function getVideoId(url: string): string | null {
     /(?:youtube\.com\/(?:watch\?(?:.*&)?v=|embed\/|live\/|shorts\/)|youtu\.be\/)([\w-]{11})/,
   );
   return match ? match[1] : null;
+}
+
+export function formatTime(totalSeconds: number): string {
+  const seconds = Math.max(0, Math.floor(totalSeconds));
+  const h = Math.floor(seconds / 3600);
+  const m = Math.floor((seconds % 3600) / 60);
+  const s = String(seconds % 60).padStart(2, "0");
+  return h > 0 ? `${h}:${String(m).padStart(2, "0")}:${s}` : `${m}:${s}`;
 }

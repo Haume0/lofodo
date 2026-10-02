@@ -9,12 +9,6 @@ body {
     background-color: #121212;
     color: white;
 }
-/* Reduce font-size for mobiles 640'ın altında 12px */
-@media (max-width: 640px) {
-    html {
-        font-size: 12px;
-    }
-}
 
 /* Custom classes */
 .bgmodeblur:active {

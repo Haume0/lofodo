@@ -24,7 +24,7 @@ export default function BackgroundImage(props: { backgrounds: Background[] }) {
     background.gif &&
     !background.state && (
       <>
-        <div className="absolute size-full left-0 top-0">
+        <div className="fixed size-full left-0 top-0">
           {!background.savePower && (
             <img
               src={background.gif}
@@ -41,7 +41,7 @@ export default function BackgroundImage(props: { backgrounds: Background[] }) {
           />
         </div>
         <span
-          className={`absolute p-4 right-0 top-0 justify-end z-50 flex gap-2`}
+          className={`absolute p-3 sm:p-5 lg:p-4 right-0 top-0 justify-end z-50 flex gap-2`}
         >
           <button
             onClick={() => {

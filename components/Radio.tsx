@@ -174,10 +174,10 @@ export default function Radio(props: { radios: string[] }) {
   return (
     <motion.div
       layout
-      className={`group bgblur-4 flex flex-col bg-black/20 size-max border-[1px] border-black/20 ${
+      className={`group bgblur-4 flex flex-col bg-black/20 border-[1px] border-black/20 ${
         background.state
-          ? "w-screen h-screen fixed left-0 top-0"
-          : "relative p-2 flex-grow overflow-hidden h-full rounded-2xl aspect-[5/4]"
+          ? "w-screen h-dvh fixed left-0 top-0"
+          : "relative p-2 overflow-hidden rounded-2xl w-full aspect-video lg:size-max lg:flex-grow lg:h-full lg:aspect-[5/4]"
       }`}
     >
       {isClient && (
@@ -211,7 +211,7 @@ export default function Radio(props: { radios: string[] }) {
         </motion.div>
       )}
       <motion.span
-        className={`absolute p-4 size-max right-0 justify-end z-50 flex gap-2 pointer-events-none [&>*]:pointer-events-auto ${
+        className={`absolute p-3 sm:p-4 size-max right-0 justify-end z-50 flex gap-2 pointer-events-none [&>*]:pointer-events-auto ${
           background.state
             ? " flex-wrap-reverse items-end w-full bottom-[110px] md:bottom-auto md:top-0 max-w-[36rem]"
             : " flex-row w-full top-0"
@@ -306,7 +306,7 @@ export default function Radio(props: { radios: string[] }) {
                 onChange={(e) => changeVolume(Number(e.target.value))}
                 title="Volume."
                 aria-label="Volume"
-                className="w-20 sm:w-24 accent-white cursor-pointer disabled:opacity-50"
+                className="w-16 sm:w-24 accent-white cursor-pointer disabled:opacity-50"
               />
             </span>
           </span>

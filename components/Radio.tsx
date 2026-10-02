@@ -2,13 +2,7 @@
 import useBackground from "@/store/background";
 import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
-import {
-  formatTime,
-  getVideoId,
-  loadYouTubeApi,
-  PlayerState,
-  YTPlayer,
-} from "./youtube";
+import { getVideoId, loadYouTubeApi, PlayerState, YTPlayer } from "./youtube";
 
 function randomVideoId(radios: string[]) {
   return getVideoId(radios[Math.floor(Math.random() * radios.length)] ?? "");
@@ -28,10 +22,6 @@ export default function Radio(props: { radios: string[] }) {
   const [playing, setPlaying] = useState(false);
   const [muted, setMuted] = useState(false);
   const [volume, setVolume] = useState(50);
-  const [currentTime, setCurrentTime] = useState(0);
-  const [duration, setDuration] = useState(0);
-  const [isLive, setLive] = useState(false);
-  const seeking = useRef(false);
   const playerContainer = useRef<HTMLDivElement>(null);
   const player = useRef<YTPlayer | null>(null);
   const loadedVideoId = useRef<string | null>(null);
@@ -92,7 +82,7 @@ export default function Radio(props: { radios: string[] }) {
           width: "100%",
           height: "100%",
           playerVars: {
-            controls: 0,
+            controls: 1,
             disablekb: 1,
             fs: 0,
             rel: 0,
@@ -148,27 +138,6 @@ export default function Radio(props: { radios: string[] }) {
     }
   }, [ready, videoId]);
 
-  // The IFrame API has no progress events, so poll the playback position.
-  useEffect(() => {
-    if (!ready) return;
-    const update = () => {
-      const p = player.current;
-      if (!p) return;
-      setDuration(p.getDuration() || 0);
-      setLive(Boolean(p.getVideoData?.().isLive));
-      if (!seeking.current) setCurrentTime(p.getCurrentTime() || 0);
-    };
-    update();
-    const interval = setInterval(update, 500);
-    return () => clearInterval(interval);
-  }, [ready, videoId]);
-
-  function seek(seconds: number, final: boolean) {
-    setCurrentTime(seconds);
-    if (!player.current || !ready) return;
-    player.current.seekTo(seconds, final);
-  }
-
   function togglePlay() {
     if (!player.current || !ready) return;
     if (playing) {
@@ -201,7 +170,6 @@ export default function Radio(props: { radios: string[] }) {
     }
   }
   const silent = muted || volume === 0;
-  const showSeekBar = ready && !isLive && duration > 0;
 
   return (
     <motion.div
@@ -215,151 +183,134 @@ export default function Radio(props: { radios: string[] }) {
       {isClient && (
         <motion.div
           layout
-          ref={playerContainer}
-          onClick={background.state ? undefined : togglePlay}
-          className={`size-full relative overflow-hidden [&_iframe]:size-full [&_iframe]:pointer-events-none ${
-            background.state ? "" : "rounded-xl cursor-pointer"
+          className={`size-full relative overflow-hidden ${
+            background.state ? "" : "rounded-xl"
           }`}
-        ></motion.div>
-      )}
-      <motion.span
-        className={`absolute p-4 left-0 bottom-0 z-50 flex flex-col gap-2 pointer-events-none [&>*]:pointer-events-auto ${
-          background.state ? "w-full md:max-w-[32rem]" : "w-full"
-        }`}
-      >
-        {showSeekBar && (
-          <span className="bgblur-4 h-10 flex items-center gap-3 px-3 bg-white/10 border-[1px] border-transparent hover:border-white/20 rounded-xl duration-300 ease-in-out font-jetbrains-mono text-xs sm:text-sm tabular-nums">
-            <span>{formatTime(currentTime)}</span>
-            <input
-              type="range"
-              min={0}
-              max={Math.floor(duration)}
-              step={1}
-              value={Math.min(Math.floor(currentTime), Math.floor(duration))}
-              onClick={(e) => e.stopPropagation()}
-              onPointerDown={() => (seeking.current = true)}
-              onChange={(e) => seek(Number(e.target.value), false)}
-              onPointerUp={(e) => {
-                seeking.current = false;
-                seek(Number(e.currentTarget.value), true);
-              }}
-              onKeyUp={(e) => seek(Number(e.currentTarget.value), true)}
-              title="Seek."
-              aria-label="Seek"
-              className="flex-1 min-w-0 accent-white cursor-pointer"
-            />
-            <span>{formatTime(duration)}</span>
-          </span>
-        )}
-        <span className="flex items-center gap-2">
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              togglePlay();
-            }}
-            disabled={!ready}
-            className={controlButton}
-            title={playing ? "Pause." : "Play."}
-          >
-            {playing ? (
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5"
-                viewBox="0 0 512 512"
-              >
-                <path
-                  d="M208 432h-48a16 16 0 01-16-16V96a16 16 0 0116-16h48a16 16 0 0116 16v320a16 16 0 01-16 16zM352 432h-48a16 16 0 01-16-16V96a16 16 0 0116-16h48a16 16 0 0116 16v320a16 16 0 01-16 16z"
-                  fill="currentColor"
-                />
-              </svg>
-            ) : (
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5"
-                viewBox="0 0 512 512"
-              >
-                <path
-                  d="M133 440a35.37 35.37 0 01-17.5-4.67c-12-6.8-19.46-20-19.46-34.33V111c0-14.37 7.46-27.53 19.46-34.33a35.13 35.13 0 0135.77.45l247.85 148.36a36 36 0 010 61l-247.89 148.4A35.5 35.5 0 01133 440z"
-                  fill="currentColor"
-                />
-              </svg>
-            )}
-          </button>
-          <span className="bgblur-4 h-10 flex items-center gap-2 pr-3 bg-white/10 border-[1px] border-transparent hover:border-white/20 rounded-xl duration-300 ease-in-out">
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                toggleMute();
-              }}
-              disabled={!ready}
-              className="size-10 flex items-center justify-center disabled:opacity-50"
-              title={silent ? "Unmute." : "Mute."}
+        >
+          <div
+            ref={playerContainer}
+            className="size-full [&_iframe]:size-full"
+          />
+          {/* Blocks the video except the bottom strip, where YouTube's own
+              progress bar lives. Keep 110px in sync with the toolbar offset. */}
+          {background.state ? (
+            <div
+              id="bgblock"
+              className="w-full bgmodeblur ease-smooth duration-300 font-jetbrains-mono font-extralight active:hover:!delay-0 z-40 text-base sm:text-lg md:text-xl text-center active:bg-purple-500/20 flex items-end justify-center text-transparent active:text-purple-200 active:border-purple-500/40 border-b-2 border-transparent h-[calc(100%-110px)] absolute top-0 left-0"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5"
-                viewBox="0 0 512 512"
-              >
-                <path
-                  d="M80 192v128h80l112 96V96L160 192H80z"
-                  fill="currentColor"
-                />
-                {silent ? (
-                  <path
-                    d="M352 208l96 96M448 208l-96 96"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeWidth="32"
-                  />
-                ) : (
-                  <path
-                    d={
-                      volume > 50
-                        ? "M336 192c16 16 24 40 24 64s-8 48-24 64M384 144c32 32 48 72 48 112s-16 80-48 112"
-                        : "M336 192c16 16 24 40 24 64s-8 48-24 64"
-                    }
-                    fill="none"
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeWidth="32"
-                  />
-                )}
-              </svg>
-            </button>
-            <input
-              type="range"
-              min={0}
-              max={100}
-              value={silent ? 0 : volume}
-              disabled={!ready}
-              onClick={(e) => e.stopPropagation()}
-              onChange={(e) => changeVolume(Number(e.target.value))}
-              title="Volume."
-              aria-label="Volume"
-              className="w-20 sm:w-24 accent-white cursor-pointer disabled:opacity-50"
-            />
-          </span>
-          {ready && isLive && (
-            <span
-              className="bgblur-4 h-10 px-3 flex items-center gap-2 bg-white/10 rounded-xl font-jetbrains-mono text-xs sm:text-sm"
-              title="This radio is a live stream."
-            >
-              <span className="size-2 rounded-full bg-red-500" />
-              LIVE
-            </span>
+              You are in background mode. <br />
+              Use the area that is not purple when clicked to interact with
+              video.
+            </div>
+          ) : (
+            <div
+              onClick={togglePlay}
+              className="w-full h-[calc(100%-110px)] absolute top-0 left-0 cursor-pointer"
+            ></div>
           )}
-        </span>
-      </motion.span>
+        </motion.div>
+      )}
       <motion.span
         className={`absolute p-4 size-max right-0 justify-end z-50 flex gap-2 pointer-events-none [&>*]:pointer-events-auto ${
           background.state
-            ? ` flex-wrap-reverse items-end w-full md:bottom-auto md:top-0 max-w-[36rem] ${
-                showSeekBar ? "bottom-24" : "bottom-12"
-              }`
+            ? " flex-wrap-reverse items-end w-full bottom-[110px] md:bottom-auto md:top-0 max-w-[36rem]"
             : " flex-row w-full top-0"
         }`}
       >
+        {!change && (
+          <span
+            className={`flex items-center gap-2 ${background.state ? "" : "mr-auto"}`}
+          >
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                togglePlay();
+              }}
+              disabled={!ready}
+              className={controlButton}
+              title={playing ? "Pause." : "Play."}
+            >
+              {playing ? (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5"
+                  viewBox="0 0 512 512"
+                >
+                  <path
+                    d="M208 432h-48a16 16 0 01-16-16V96a16 16 0 0116-16h48a16 16 0 0116 16v320a16 16 0 01-16 16zM352 432h-48a16 16 0 01-16-16V96a16 16 0 0116-16h48a16 16 0 0116 16v320a16 16 0 01-16 16z"
+                    fill="currentColor"
+                  />
+                </svg>
+              ) : (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5"
+                  viewBox="0 0 512 512"
+                >
+                  <path
+                    d="M133 440a35.37 35.37 0 01-17.5-4.67c-12-6.8-19.46-20-19.46-34.33V111c0-14.37 7.46-27.53 19.46-34.33a35.13 35.13 0 0135.77.45l247.85 148.36a36 36 0 010 61l-247.89 148.4A35.5 35.5 0 01133 440z"
+                    fill="currentColor"
+                  />
+                </svg>
+              )}
+            </button>
+            <span className="bgblur-4 h-10 flex items-center gap-2 pr-3 bg-white/10 border-[1px] border-transparent hover:border-white/20 rounded-xl duration-300 ease-in-out">
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  toggleMute();
+                }}
+                disabled={!ready}
+                className="size-10 flex items-center justify-center disabled:opacity-50"
+                title={silent ? "Unmute." : "Mute."}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5"
+                  viewBox="0 0 512 512"
+                >
+                  <path
+                    d="M80 192v128h80l112 96V96L160 192H80z"
+                    fill="currentColor"
+                  />
+                  {silent ? (
+                    <path
+                      d="M352 208l96 96M448 208l-96 96"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeWidth="32"
+                    />
+                  ) : (
+                    <path
+                      d={
+                        volume > 50
+                          ? "M336 192c16 16 24 40 24 64s-8 48-24 64M384 144c32 32 48 72 48 112s-16 80-48 112"
+                          : "M336 192c16 16 24 40 24 64s-8 48-24 64"
+                      }
+                      fill="none"
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeWidth="32"
+                    />
+                  )}
+                </svg>
+              </button>
+              <input
+                type="range"
+                min={0}
+                max={100}
+                value={silent ? 0 : volume}
+                disabled={!ready}
+                onClick={(e) => e.stopPropagation()}
+                onChange={(e) => changeVolume(Number(e.target.value))}
+                title="Volume."
+                aria-label="Volume"
+                className="w-20 sm:w-24 accent-white cursor-pointer disabled:opacity-50"
+              />
+            </span>
+          </span>
+        )}
         <AnimatePresence mode="wait">
           {!change ? (
             <>

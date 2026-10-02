@@ -1,28 +1,43 @@
 "use client";
 import useBackground from "@/store/background";
 import { AnimatePresence, motion } from "motion/react";
-import { useEffect, useState } from "react";
-function urlToEmbed(url: string) {
-  const videoId = url.split("v=")[1];
-  return `https://www.youtube.com/embed/${videoId}?si=jMY8kVmD5WQiQ6aP`;
+import { useEffect, useRef, useState } from "react";
+import { getVideoId, loadYouTubeApi, PlayerState, YTPlayer } from "./youtube";
+
+function randomVideoId(radios: string[]) {
+  return getVideoId(radios[Math.floor(Math.random() * radios.length)] ?? "");
 }
-function embedToUrl(embed: string) {
-  const videoId = embed.split("embed/")[1];
-  return `https://www.youtube.com/watch?v=${videoId}`;
-}
+
+const controlButton =
+  "bgblur-4 size-10 flex items-center justify-center bg-white/10 hover:bg-white/20 border-[1px] border-transparent ease-in-out hover:border-white/20 rounded-xl duration-300 disabled:opacity-50 disabled:pointer-events-none";
 
 export default function Radio(props: { radios: string[] }) {
   const [isClient, setClient] = useState(false);
   const background = useBackground();
   const [change, setChange] = useState(false);
-  const [url, setUrl] = useState(
-    urlToEmbed(props.radios[Math.floor(Math.random() * props.radios.length)]),
+  const [videoId, setVideoId] = useState<string | null>(() =>
+    randomVideoId(props.radios),
   );
+  const [ready, setReady] = useState(false);
+  const [playing, setPlaying] = useState(false);
+  const [muted, setMuted] = useState(false);
+  const [volume, setVolume] = useState(50);
+  const playerContainer = useRef<HTMLDivElement>(null);
+  const player = useRef<YTPlayer | null>(null);
+  const loadedVideoId = useRef<string | null>(null);
+  const videoIdRef = useRef(videoId);
+
   useEffect(() => {
     const localRadio = localStorage.getItem("radio");
-    if (localRadio) {
-      setUrl(localRadio);
+    const localVideoId = localRadio && getVideoId(localRadio);
+    if (localVideoId) {
+      setVideoId(localVideoId);
     }
+    const localVolume = Number(localStorage.getItem("volume"));
+    if (localStorage.getItem("volume") !== null && !isNaN(localVolume)) {
+      setVolume(Math.min(100, Math.max(0, localVolume)));
+    }
+    setMuted(localStorage.getItem("muted") === "true");
     setClient(true);
     const handleClickOutside = (e: MouseEvent) => {
       if (!(e.target as Element).closest(`.changeModal`)) {
@@ -35,9 +50,127 @@ export default function Radio(props: { radios: string[] }) {
     };
   }, []);
   useEffect(() => {
-    localStorage.setItem("radio", url);
+    if (videoId) {
+      localStorage.setItem("radio", `https://www.youtube.com/embed/${videoId}`);
+    }
     localStorage.setItem("background", background.state.toString());
-  }, [url, background.state]);
+  }, [videoId, background.state]);
+  useEffect(() => {
+    if (!isClient) return;
+    localStorage.setItem("volume", volume.toString());
+    localStorage.setItem("muted", muted.toString());
+  }, [isClient, volume, muted]);
+
+  useEffect(() => {
+    videoIdRef.current = videoId;
+  }, [videoId]);
+
+  // Create the player once; video changes are handled below.
+  useEffect(() => {
+    const container = playerContainer.current;
+    const initialVideoId = videoIdRef.current;
+    if (!isClient || !container || !initialVideoId) return;
+    let cancelled = false;
+    loadYouTubeApi()
+      .then((YT) => {
+        if (cancelled) return;
+        const target = document.createElement("div");
+        container.appendChild(target);
+        loadedVideoId.current = initialVideoId;
+        player.current = new YT.Player(target, {
+          videoId: initialVideoId,
+          width: "100%",
+          height: "100%",
+          playerVars: {
+            controls: 1,
+            disablekb: 1,
+            fs: 0,
+            rel: 0,
+            iv_load_policy: 3,
+            playsinline: 1,
+            origin: window.location.origin,
+          },
+          events: {
+            onReady: (e) => {
+              if (cancelled) return;
+              const savedVolume = Number(localStorage.getItem("volume") ?? 50);
+              e.target.setVolume(isNaN(savedVolume) ? 50 : savedVolume);
+              if (localStorage.getItem("muted") === "true") {
+                e.target.mute();
+              } else {
+                e.target.unMute();
+              }
+              setReady(true);
+            },
+            onStateChange: (e) => {
+              setPlaying(
+                e.data === PlayerState.PLAYING ||
+                  e.data === PlayerState.BUFFERING,
+              );
+            },
+            onError: (e) => {
+              console.error("YouTube player error:", e.data);
+            },
+          },
+        });
+      })
+      .catch((error) => console.error(error));
+    return () => {
+      cancelled = true;
+      player.current?.destroy();
+      player.current = null;
+      loadedVideoId.current = null;
+      container.innerHTML = "";
+      setReady(false);
+      setPlaying(false);
+    };
+  }, [isClient]);
+
+  useEffect(() => {
+    if (!ready || !player.current || !videoId) return;
+    if (loadedVideoId.current === videoId) return;
+    loadedVideoId.current = videoId;
+    const state = player.current.getPlayerState();
+    if (state === PlayerState.PLAYING || state === PlayerState.BUFFERING) {
+      player.current.loadVideoById(videoId);
+    } else {
+      player.current.cueVideoById(videoId);
+    }
+  }, [ready, videoId]);
+
+  function togglePlay() {
+    if (!player.current || !ready) return;
+    if (playing) {
+      player.current.pauseVideo();
+    } else {
+      player.current.playVideo();
+    }
+  }
+  function toggleMute() {
+    if (!player.current || !ready) return;
+    if (muted || volume === 0) {
+      if (volume === 0) {
+        setVolume(50);
+        player.current.setVolume(50);
+      }
+      player.current.unMute();
+      setMuted(false);
+    } else {
+      player.current.mute();
+      setMuted(true);
+    }
+  }
+  function changeVolume(value: number) {
+    setVolume(value);
+    if (!player.current || !ready) return;
+    player.current.setVolume(value);
+    if (muted && value > 0) {
+      player.current.unMute();
+      setMuted(false);
+    }
+  }
+  const silent = muted || volume === 0;
+
   return (
     <motion.div
       layout
@@ -47,36 +180,137 @@ export default function Radio(props: { radios: string[] }) {
           : "relative p-2 flex-grow overflow-hidden h-full rounded-2xl aspect-[5/4]"
       }`}
     >
-      {background.state && (
-        <div
-          id="bgblock"
-          className="w-full bgmodeblur ease-smooth duration-300 font-jetbrains-mono font-extralight group active:hover:!delay-0 z-50 group-hover:delay-[800ms] text-base sm:text-lg md:text-xl text-center active:bg-purple-500/20 flex items-end justify-center text-transparent active:text-purple-200 active:border-purple-500/40 border-b-2 border-transparent h-[calc(100%-6rem)] absolute"
-        >
-          You are in background mode. <br />
-          Use the area that is not purple when clicked to interact with video.
-        </div>
-      )}
       {isClient && (
-        <motion.iframe
+        <motion.div
           layout
           className={`size-full relative overflow-hidden ${
             background.state ? "" : "rounded-xl"
           }`}
-          src={`${url}`}
-          // src={`${url}&autoplay=1`}
-          onError={(e) => {
-            e.preventDefault();
-            console.error("An error occurred while loading the iframe.");
-          }}
-        ></motion.iframe>
+        >
+          <div
+            ref={playerContainer}
+            className="size-full [&_iframe]:size-full"
+          />
+          {/* Blocks the video except the bottom strip, where YouTube's own
+              progress bar lives. Keep 110px in sync with the toolbar offset. */}
+          {background.state ? (
+            <div
+              id="bgblock"
+              className="w-full bgmodeblur ease-smooth duration-300 font-jetbrains-mono font-extralight active:hover:!delay-0 z-40 text-base sm:text-lg md:text-xl text-center active:bg-purple-500/20 flex items-end justify-center text-transparent active:text-purple-200 active:border-purple-500/40 border-b-2 border-transparent h-[calc(100%-110px)] absolute top-0 left-0"
+            >
+              You are in background mode. <br />
+              Use the area that is not purple when clicked to interact with
+              video.
+            </div>
+          ) : (
+            <div
+              onClick={togglePlay}
+              className="w-full h-[calc(100%-110px)] absolute top-0 left-0 cursor-pointer"
+            ></div>
+          )}
+        </motion.div>
       )}
       <motion.span
-        className={`absolute p-4 size-max right-0 justify-end z-50 flex gap-2 ${
+        className={`absolute p-4 size-max right-0 justify-end z-50 flex gap-2 pointer-events-none [&>*]:pointer-events-auto ${
           background.state
-            ? " flex-wrap-reverse items-end w-full bottom-0 md:top-0 max-w-[36rem]"
+            ? " flex-wrap-reverse items-end w-full bottom-[110px] md:bottom-auto md:top-0 max-w-[36rem]"
             : " flex-row w-full top-0"
         }`}
       >
+        {!change && (
+          <span
+            className={`flex items-center gap-2 ${background.state ? "" : "mr-auto"}`}
+          >
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                togglePlay();
+              }}
+              disabled={!ready}
+              className={controlButton}
+              title={playing ? "Pause." : "Play."}
+            >
+              {playing ? (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5"
+                  viewBox="0 0 512 512"
+                >
+                  <path
+                    d="M208 432h-48a16 16 0 01-16-16V96a16 16 0 0116-16h48a16 16 0 0116 16v320a16 16 0 01-16 16zM352 432h-48a16 16 0 01-16-16V96a16 16 0 0116-16h48a16 16 0 0116 16v320a16 16 0 01-16 16z"
+                    fill="currentColor"
+                  />
+                </svg>
+              ) : (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5"
+                  viewBox="0 0 512 512"
+                >
+                  <path
+                    d="M133 440a35.37 35.37 0 01-17.5-4.67c-12-6.8-19.46-20-19.46-34.33V111c0-14.37 7.46-27.53 19.46-34.33a35.13 35.13 0 0135.77.45l247.85 148.36a36 36 0 010 61l-247.89 148.4A35.5 35.5 0 01133 440z"
+                    fill="currentColor"
+                  />
+                </svg>
+              )}
+            </button>
+            <span className="bgblur-4 h-10 flex items-center gap-2 pr-3 bg-white/10 border-[1px] border-transparent hover:border-white/20 rounded-xl duration-300 ease-in-out">
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  toggleMute();
+                }}
+                disabled={!ready}
+                className="size-10 flex items-center justify-center disabled:opacity-50"
+                title={silent ? "Unmute." : "Mute."}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5"
+                  viewBox="0 0 512 512"
+                >
+                  <path
+                    d="M80 192v128h80l112 96V96L160 192H80z"
+                    fill="currentColor"
+                  />
+                  {silent ? (
+                    <path
+                      d="M352 208l96 96M448 208l-96 96"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeWidth="32"
+                    />
+                  ) : (
+                    <path
+                      d={
+                        volume > 50
+                          ? "M336 192c16 16 24 40 24 64s-8 48-24 64M384 144c32 32 48 72 48 112s-16 80-48 112"
+                          : "M336 192c16 16 24 40 24 64s-8 48-24 64"
+                      }
+                      fill="none"
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeWidth="32"
+                    />
+                  )}
+                </svg>
+              </button>
+              <input
+                type="range"
+                min={0}
+                max={100}
+                value={silent ? 0 : volume}
+                disabled={!ready}
+                onClick={(e) => e.stopPropagation()}
+                onChange={(e) => changeVolume(Number(e.target.value))}
+                title="Volume."
+                aria-label="Volume"
+                className="w-20 sm:w-24 accent-white cursor-pointer disabled:opacity-50"
+              />
+            </span>
+          </span>
+        )}
         <AnimatePresence mode="wait">
           {!change ? (
             <>
@@ -96,22 +330,13 @@ export default function Radio(props: { radios: string[] }) {
                     e.stopPropagation();
                     if (e.shiftKey) {
                       const currentIndex = props.radios.findIndex(
-                        (radio) => urlToEmbed(radio) === url,
+                        (radio) => getVideoId(radio) === videoId,
                       );
-                      const nextIndex = currentIndex + 1;
-                      if (nextIndex < props.radios.length) {
-                        setUrl(urlToEmbed(props.radios[nextIndex]));
-                      } else {
-                        setUrl(urlToEmbed(props.radios[0]));
-                      }
+                      const nextIndex =
+                        (currentIndex + 1) % props.radios.length;
+                      setVideoId(getVideoId(props.radios[nextIndex]));
                     } else {
-                      setUrl(
-                        urlToEmbed(
-                          props.radios[
-                            Math.floor(Math.random() * props.radios.length)
-                          ],
-                        ),
-                      );
+                      setVideoId(randomVideoId(props.radios));
                     }
                   }}
                   title="Shuffle the radios or go to the next radio if shift is held."
@@ -237,10 +462,9 @@ export default function Radio(props: { radios: string[] }) {
                 const video = (
                   form.elements.namedItem("video") as HTMLInputElement
                 ).value;
-                const youtubeRegex =
-                  /^(https?\:\/\/)?(www\.youtube\.com|youtu\.?be)\/.+$/;
-                if (youtubeRegex.test(video)) {
-                  setUrl(urlToEmbed(video));
+                const id = getVideoId(video);
+                if (id) {
+                  setVideoId(id);
                   setChange(false);
                 } else {
                   alert("Please enter a valid YouTube video URL.");
@@ -323,7 +547,9 @@ export default function Radio(props: { radios: string[] }) {
                 className="w-full"
               >
                 <input
-                  defaultValue={embedToUrl(url)}
+                  defaultValue={
+                    videoId ? `https://www.youtube.com/watch?v=${videoId}` : ""
+                  }
                   type="text"
                   name="video"
                   placeholder="Enter a YouTube video URL."

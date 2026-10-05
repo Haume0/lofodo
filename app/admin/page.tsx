@@ -1,57 +1,30 @@
-import { checkToken, checkUser } from "@/auth";
-import { revalidatePath } from "next/cache";
-import { cookies } from "next/headers";
-import Home from "./Home";
+import { notFound } from "next/navigation";
+import { getBackground } from "@/actions/backgrounds";
+import { getRadios } from "@/actions/radios";
+import BackgroundsPanel from "./BackgroundsPanel";
+import RadiosPanel from "./RadiosPanel";
 
-export default async function page() {
-  const isLoggedIn = (
-    await checkToken((await cookies()).get("hwt")?.value || "")
-  )[0];
+// No login: the admin edits files committed to git, so it only runs on a
+// local dev server and anyone able to publish changes already has repo access.
+export default async function AdminPage() {
+  if (process.env.NODE_ENV !== "development") notFound();
+  const [radios, backgrounds] = await Promise.all([
+    getRadios(),
+    getBackground(),
+  ]);
   return (
-    <section className="p-16 flex flex-col gap-4 relative items-center min-h-svh justify-center">
-      {!isLoggedIn ? <Login /> : <Home />}
+    <section className="p-3 sm:p-6 lg:p-8 flex flex-col gap-4 min-h-dvh max-w-6xl mx-auto scheme-dark">
+      <header>
+        <h1 className="text-3xl sm:text-4xl font-black">LOFODO Admin</h1>
+        <p className="font-jetbrains-mono text-sm text-white/60">
+          Dev only. Changes are written to <code>data/radios.json</code> and{" "}
+          <code>public/backgrounds</code>; commit them to publish.
+        </p>
+      </header>
+      <div className="grid lg:grid-cols-2 gap-4 items-start">
+        <RadiosPanel radios={radios} />
+        <BackgroundsPanel backgrounds={backgrounds} />
+      </div>
     </section>
-  );
-}
-
-function Login() {
-  return (
-    <form
-      action={async (e) => {
-        "use server";
-        const username = e.get("username")?.toString() || "";
-        const password = e.get("password")?.toString() || "";
-        const [result, hash] = await checkUser({
-          name: username,
-          password: password,
-        });
-        if (result) {
-          //add hash to cookie hwt=hash
-          (await cookies()).set("hwt", hash);
-          revalidatePath("/");
-        }
-      }}
-      className="flex flex-col w-md relative gap-2"
-    >
-      <h1 className="text-center text-4xl font-black">LOFODO Admin Panel</h1>
-      <input
-        type="text"
-        name="username"
-        placeholder="Enter admin username."
-        className="px-3 w-full bgblur-4 rounded-xl h-10 bg-white/10 focus:bg-white/20 border border-transparent ease-in-out focus:border-white/20 outline-hidden duration-300"
-      />
-      <input
-        type="password"
-        name="password"
-        placeholder="Enter password."
-        className="px-3 w-full bgblur-4 rounded-xl h-10 bg-white/10 focus:bg-white/20 border border-transparent ease-in-out focus:border-white/20 outline-hidden duration-300"
-      />
-      <button
-        className="px-5 bgblur-4 size-full h-10 flex items-center justify-center bg-white/10 hover:bg-white/20 border border-transparent ease-in-out hover:border-white/20 rounded-xl duration-300"
-        title="Change radio."
-      >
-        Enter
-      </button>
-    </form>
   );
 }

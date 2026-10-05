@@ -4,7 +4,7 @@
 # -----------------------------------------------------------------------------
 
 # Use Bun's official image
-FROM oven/bun:1.3.5 AS base
+FROM oven/bun:1.4.2 AS base
 
 WORKDIR /app
 

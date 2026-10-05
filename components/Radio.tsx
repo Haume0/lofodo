@@ -624,10 +624,11 @@ export default function Radio(props: { radios: string[] }) {
       </motion.div>
       {/* Going fixed drops the player out of the mobile stack, so the scroll
           ends on the clock and the middle of the video stays covered. This
-          empty screen gives that snap stop back; taps pass through to the
-          video. lg already shows the video behind the cards. */}
+          video-sized gap gives that snap stop back; taps pass through to the
+          video. A full-screen gap would force a scroll in portrait even when
+          the video is already in view. lg shows the video behind the cards. */}
       {background.state && (
-        <div className="lg:hidden h-dvh shrink-0 snap-center pointer-events-none" />
+        <div className="lg:hidden w-full max-w-screen aspect-video shrink-0 snap-center pointer-events-none" />
       )}
     </>
   );

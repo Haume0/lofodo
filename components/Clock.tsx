@@ -320,13 +320,13 @@ export default function Clock() {
         <motion.span
           layout="position"
           className="flex pointer-events-none -space-x-2 mx-auto">
-          <h1 className=" font-jetbrains-mono text-[5.5rem] leading-none sm:text-9xl font-extrabold tracking-[-0.4rem] sm:tracking-[-0.6rem]">
+          <h1 className=" font-jetbrains-mono text-[5.5rem] leading-none sm:text-9xl 2xl:text-[10rem] font-extrabold tracking-[-0.4rem] sm:tracking-[-0.6rem] 2xl:tracking-[-0.75rem]">
             {clock.Minute < 10 ? `0${clock.Minute}` : clock.Minute}
           </h1>
-          <h1 className=" font-jetbrains-mono text-[5.5rem] leading-none sm:text-9xl font-extrabold tracking-[-0.4rem] sm:tracking-[-0.6rem]">
+          <h1 className=" font-jetbrains-mono text-[5.5rem] leading-none sm:text-9xl 2xl:text-[10rem] font-extrabold tracking-[-0.4rem] sm:tracking-[-0.6rem] 2xl:tracking-[-0.75rem]">
             :
           </h1>
-          <h1 className=" font-jetbrains-mono text-[5.5rem] leading-none sm:text-9xl font-extrabold tracking-[-0.4rem] sm:tracking-[-0.6rem]">
+          <h1 className=" font-jetbrains-mono text-[5.5rem] leading-none sm:text-9xl 2xl:text-[10rem] font-extrabold tracking-[-0.4rem] sm:tracking-[-0.6rem] 2xl:tracking-[-0.75rem]">
             {clock.Second < 10 ? `0${clock.Second}` : clock.Second}
           </h1>
         </motion.span>

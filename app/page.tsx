@@ -63,7 +63,12 @@ export default async function Home() {
             </a>
           </ul>
         </main>
-        <span className="snap-center flex justify-center w-full lg:w-auto lg:mx-auto lg:mb-auto">
+        {/* On lg the clock stays in the column flow, so it is centered on the
+            screen horizontally and sits in the middle of the space between
+            the intro and the radio; nothing can overlap it on short screens.
+            The radio grows to the intro's width (18rem tall at 16:9) and
+            shrinks first on short screens, leaving that space to the clock. */}
+        <span className="snap-center flex justify-center w-full lg:w-auto lg:m-auto">
           <Clock />
         </span>
         <Radio radios={radios} />

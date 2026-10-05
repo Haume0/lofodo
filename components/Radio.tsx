@@ -178,10 +178,12 @@ export default function Radio(props: { radios: string[] }) {
   // card's toolbar, on lg the gap is `contents` and they go to the corner.
   const controls = (
     <motion.span
-      className={`absolute top-0 right-0 p-3 sm:p-4 size-max w-full justify-end z-50 flex gap-2 pointer-events-none *:pointer-events-auto ${
+      className={`absolute top-0 right-0 size-max w-full justify-end z-50 flex gap-2 pointer-events-none *:pointer-events-auto ${
         background.state
-          ? "lg:fixed lg:flex-wrap-reverse lg:items-end lg:max-w-xl"
-          : ""
+          ? // The gap rarely lines up with the letterboxed video, so on mobile
+            // the controls carry their own card instead of relying on it.
+            "p-2 rounded-2xl bg-black/20 border border-black/20 backdrop-blur-xs lg:p-4 lg:rounded-none lg:bg-transparent lg:border-0 lg:backdrop-blur-none lg:fixed lg:flex-wrap-reverse lg:items-end lg:max-w-xl"
+          : "p-3 sm:p-4"
       }`}
     >
       <AnimatePresence mode="wait">
@@ -626,10 +628,9 @@ export default function Radio(props: { radios: string[] }) {
           ends on the clock and the middle of the video stays covered. This
           video-sized gap gives that snap stop back; taps pass through to the
           video. A full-screen gap would force a scroll in portrait even when
-          the video is already in view. lg shows the video behind the cards.
-          It gets the card's frame but no blur, which would hide the video. */}
+          the video is already in view. lg shows the video behind the cards. */}
       {background.state && (
-        <div className="relative w-full max-w-screen aspect-video shrink-0 snap-center pointer-events-none rounded-2xl bg-black/20 border border-black/20 lg:contents">
+        <div className="relative w-full max-w-screen aspect-video shrink-0 snap-center pointer-events-none lg:contents">
           {controls}
         </div>
       )}

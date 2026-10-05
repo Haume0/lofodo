@@ -49,6 +49,28 @@ export default function Clock() {
         console.error("Alarm sound play request was denied.");
       }
     });
+    // The alarm is enough while the user looks at the page; notify only when
+    // they are in another tab or app. Shown through the service worker since
+    // Android and installed PWAs reject `new Notification()`.
+    if (
+      !document.hasFocus() &&
+      "Notification" in window &&
+      Notification.permission === "granted"
+    ) {
+      navigator.serviceWorker?.getRegistration("/sw/").then((registration) =>
+        registration?.showNotification(
+          mode === "pomodoro" ? "Time for a break" : "Back to focus",
+          {
+            body:
+              mode === "pomodoro"
+                ? "Focus session done, take a breather."
+                : "Break is over, next pomodoro is ready.",
+            icon: "/icons/icon-192.png",
+            tag: "lofodo-timer",
+          },
+        ),
+      );
+    }
     const newCurrent = auto.current + 1;
     if (mode === "pomodoro" && auto.current < auto.goal) {
       setAuto({
@@ -83,6 +105,10 @@ export default function Clock() {
         console.error("Start sound play request was denied.");
       }
     });
+    // Asked here because browsers only show the permission prompt on a user action.
+    if ("Notification" in window && Notification.permission === "default") {
+      Notification.requestPermission();
+    }
     if (!isRunning) {
       const startTime = Date.now();
       sessionStorage.setItem("startTime", startTime.toString());
@@ -169,6 +195,14 @@ export default function Clock() {
   useEffect(() => {
     localStorage.setItem("auto", JSON.stringify(auto));
   }, [auto]);
+
+  useEffect(() => {
+    // Scope points at a path no page lives on, so the worker never controls a
+    // page and the browser never re-fetches /sw.js on navigations. Otherwise,
+    // other projects run later on the same localhost port keep requesting it.
+    // Showing notifications doesn't need the page to be controlled.
+    navigator.serviceWorker?.register("/sw.js", { scope: "/sw/" });
+  }, []);
 
   const handleModeChange = (newMode: Mode) => {
     setMode(newMode);

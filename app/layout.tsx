@@ -36,6 +36,11 @@ export default function RootLayout({
         <meta name="copyright" content="Haume" />
         <meta name="robots" content="index, follow" />
         <meta name="rating" content="general" />
+        <meta name="theme-color" content="#121212" />
+        {/* iOS home screen uses these instead of the manifest icons and name. */}
+        <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="Lofodo" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
       </head>
       <body
         className={`${lato.variable} ${lato.variable} ${jetbrainsMono.variable} antialiased`}

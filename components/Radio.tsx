@@ -626,9 +626,10 @@ export default function Radio(props: { radios: string[] }) {
           ends on the clock and the middle of the video stays covered. This
           video-sized gap gives that snap stop back; taps pass through to the
           video. A full-screen gap would force a scroll in portrait even when
-          the video is already in view. lg shows the video behind the cards. */}
+          the video is already in view. lg shows the video behind the cards.
+          It gets the card's frame but no blur, which would hide the video. */}
       {background.state && (
-        <div className="relative w-full max-w-screen aspect-video shrink-0 snap-center pointer-events-none lg:contents">
+        <div className="relative w-full max-w-screen aspect-video shrink-0 snap-center pointer-events-none rounded-2xl bg-black/20 border border-black/20 lg:contents">
           {controls}
         </div>
       )}

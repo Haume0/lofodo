@@ -1,6 +1,12 @@
 "use client";
 
-import { AnimatePresence, motion } from "motion/react";
+import {
+  AnimatePresence,
+  animate,
+  motion,
+  useDragControls,
+  useMotionValue,
+} from "motion/react";
 import { useEffect, useState, useRef } from "react";
 
 type Mode = "pomodoro" | "shortBreak" | "longBreak";
@@ -204,6 +210,35 @@ export default function Clock() {
     navigator.serviceWorker?.register("/sw.js", { scope: "/sw/" });
   }, []);
 
+  // Experimental: on desktop the clock can be dragged by its digits and
+  // stays where it's dropped. The offset from its centered spot is stored as
+  // a fraction of the viewport so it lands in the same place after a resize.
+  // Mobile keeps it in the scroll-snapped stack, where dragging would fight
+  // the scroll.
+  const dragControls = useDragControls();
+  const dragBounds = useRef<HTMLDivElement>(null);
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+  const [canDrag, setCanDrag] = useState(false);
+
+  useEffect(() => {
+    const desktop = window.matchMedia("(min-width: 1024px)");
+    const place = () => {
+      setCanDrag(desktop.matches);
+      const stored = desktop.matches && localStorage.getItem("clockOffset");
+      const offset = stored ? JSON.parse(stored) : { x: 0, y: 0 };
+      x.set(offset.x * window.innerWidth);
+      y.set(offset.y * window.innerHeight);
+    };
+    place();
+    desktop.addEventListener("change", place);
+    window.addEventListener("resize", place);
+    return () => {
+      desktop.removeEventListener("change", place);
+      window.removeEventListener("resize", place);
+    };
+  }, []);
+
   const handleModeChange = (newMode: Mode) => {
     setMode(newMode);
     resetTimer();
@@ -213,9 +248,25 @@ export default function Clock() {
 
   return (
     <>
+      <div ref={dragBounds} className="fixed inset-0 pointer-events-none" />
       <motion.div
         layoutId="ehe"
         layout="size"
+        drag={canDrag}
+        dragControls={dragControls}
+        dragListener={false}
+        dragMomentum={false}
+        dragConstraints={dragBounds}
+        onDragEnd={() =>
+          localStorage.setItem(
+            "clockOffset",
+            JSON.stringify({
+              x: x.get() / window.innerWidth,
+              y: y.get() / window.innerHeight,
+            }),
+          )
+        }
+        style={{ x, y }}
         className="w-full lg:w-max h-max bgblur-4 relative z-10 max-w-xl p-2 flex flex-col gap-2 rounded-2xl bg-black/20 border border-black/20">
         <motion.span layout="position" className="flex w-full gap-1.5 sm:gap-2">
           <button
@@ -317,9 +368,17 @@ export default function Clock() {
             </motion.span>
           )}
         </AnimatePresence>
+        {/* The digits are the drag handle, so the buttons keep plain clicks. */}
         <motion.span
           layout="position"
-          className="flex pointer-events-none -space-x-2 mx-auto">
+          onPointerDown={(e) => canDrag && dragControls.start(e)}
+          onDoubleClick={() => {
+            localStorage.removeItem("clockOffset");
+            animate(x, 0);
+            animate(y, 0);
+          }}
+          title={canDrag ? "Drag to move, double-click to recenter." : undefined}
+          className="flex select-none pointer-events-none lg:pointer-events-auto lg:cursor-grab lg:active:cursor-grabbing -space-x-2 mx-auto">
           <h1 className=" font-jetbrains-mono text-[5.5rem] leading-none sm:text-9xl 2xl:text-[10rem] font-extrabold tracking-[-0.4rem] sm:tracking-[-0.6rem] 2xl:tracking-[-0.75rem]">
             {clock.Minute < 10 ? `0${clock.Minute}` : clock.Minute}
           </h1>

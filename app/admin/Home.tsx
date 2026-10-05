@@ -14,13 +14,13 @@ export default async function Home() {
   }
   return (
     <>
-      <div className="flex gap-2 bg-white/10 rounded-3xl border-[1px] border-white/20 p-4 justify-between w-[28rem]">
+      <div className="flex gap-2 bg-white/10 rounded-3xl border border-white/20 p-4 justify-between w-md">
         <span>
           <p className="text-base text-purple-500 font-light">Welcome,</p>
           <h1 className="text-2xl font-black">{user.name}</h1>
         </span>
         <button
-          className="hover:bg-red-500/10 hover:text-red-500 border-[1px] border-transparent ease-smooth duration-300 hover:border-red-500/20 px-4 py-1 size-max rounded-full"
+          className="hover:bg-red-500/10 hover:text-red-500 border border-transparent ease-smooth duration-300 hover:border-red-500/20 px-4 py-1 size-max rounded-full"
           onClick={async () => {
             "use server";
             (await cookies()).delete("hwt");
@@ -30,7 +30,7 @@ export default async function Home() {
           Logout
         </button>
       </div>
-      <div className="flex flex-col gap-2 bg-white/10 rounded-3xl border-[1px] border-white/20 p-4 justify-between w-[28rem]">
+      <div className="flex flex-col gap-2 bg-white/10 rounded-3xl border border-white/20 p-4 justify-between w-md">
         <h1 className="text-center w-full text-3xl font-black">Radios</h1>
         <form
           action={async (e) => {
@@ -45,7 +45,7 @@ export default async function Home() {
             type="text"
             name={"add_url"}
             placeholder="Enter youtube url."
-            className={`peer px-3 w-full bg-blur-4 rounded-xl h-10 bg-white/10 focus:bg-white/20 border border-transparent ease-in-out focus:border-white/20 outline-none duration-300`}
+            className={`peer px-3 w-full bg-blur-4 rounded-xl h-10 bg-white/10 focus:bg-white/20 border border-transparent ease-in-out focus:border-white/20 outline-hidden duration-300`}
           />
           <button
             className={`ml-1 opacity-100 px-5 bg-blur-4 w-24 overflow-clip h-10 flex items-center justify-center bg-white/10 hover:bg-white/20 border border-transparent ease-in-out hover:border-white/20 rounded-xl duration-300`}
@@ -73,7 +73,7 @@ export default async function Home() {
                 name={"new_url"}
                 defaultValue={item}
                 placeholder="Enter youtube url."
-                className={`peer px-3 w-full bg-blur-4 rounded-xl h-10 bg-white/10 focus:bg-white/20 border border-transparent ease-in-out focus:border-white/20 outline-none duration-300`}
+                className={`peer px-3 w-full bg-blur-4 rounded-xl h-10 bg-white/10 focus:bg-white/20 border border-transparent ease-in-out focus:border-white/20 outline-hidden duration-300`}
               />
               <button
                 className={`w-0 p-0 opacity-0 ml-0 peer-focus:ml-1 peer-focus:opacity-100 peer-focus:px-5 bg-blur-4 peer-focus:delay-100 delay-1000 peer-focus:w-24 overflow-clip h-10 flex items-center justify-center bg-white/10 hover:bg-white/20 border border-transparent ease-in-out hover:border-white/20 rounded-xl duration-300`}

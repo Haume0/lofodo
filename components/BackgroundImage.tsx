@@ -28,7 +28,7 @@ export default function BackgroundImage(props: { backgrounds: Background[] }) {
           {!background.savePower && (
             <img
               src={background.gif}
-              className="size-full absolute object-cover object-center left-0 top-0 -z-10 blur"
+              className="size-full absolute object-cover object-center left-0 top-0 -z-10 blur-sm"
               loading="eager"
               alt="Blurred background image"
             />
@@ -50,7 +50,7 @@ export default function BackgroundImage(props: { backgrounds: Background[] }) {
               localStorage.setItem("backgroundGif", rng);
             }}
             title="Shuffle the background."
-            className="size-10 bgblur-4 flex items-center justify-center bg-white/10 hover:bg-white/20 border-[1px] border-transparent ease-in-out hover:border-white/20 rounded-xl duration-300"
+            className="size-10 bgblur-4 flex items-center justify-center bg-white/10 hover:bg-white/20 border border-transparent ease-in-out hover:border-white/20 rounded-xl duration-300"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -76,7 +76,7 @@ export default function BackgroundImage(props: { backgrounds: Background[] }) {
               background.togglePowerMode();
             }}
             title="Shuffle the background."
-            className="size-10 bgblur-4 flex items-center justify-center bg-white/10 hover:bg-white/20 border-[1px] border-transparent ease-in-out hover:border-white/20 rounded-xl duration-300"
+            className="size-10 bgblur-4 flex items-center justify-center bg-white/10 hover:bg-white/20 border border-transparent ease-in-out hover:border-white/20 rounded-xl duration-300"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"

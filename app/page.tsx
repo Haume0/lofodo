@@ -13,9 +13,9 @@ export default async function Home() {
       {/* Below lg this column is the positioning context, so the background
           buttons sit inside the header card; on lg it's static and they go
           back to the page corner. */}
-      <span className="relative lg:static flex flex-col gap-3 sm:gap-4 lg:gap-0 lg:justify-between lg:h-full w-full max-w-[36rem] mx-auto lg:max-w-none lg:mx-0">
+      <span className="relative lg:static flex flex-col gap-3 sm:gap-4 lg:gap-0 lg:justify-between lg:h-full w-full max-w-xl mx-auto lg:max-w-none lg:mx-0">
         <BackgroundImage backgrounds={backgrounds} />
-        <main className="bgblur-4 relative z-10 w-full lg:max-w-[32rem] h-max p-4 sm:p-6 flex flex-col gap-2 rounded-2xl bg-black/20 border-[1px] border-black/20">
+        <main className="bgblur-4 relative z-10 w-full lg:max-w-lg h-max p-4 sm:p-6 flex flex-col gap-2 rounded-2xl bg-black/20 border border-black/20">
           <Image
             src="/lofodo-text.svg"
             width={172}
@@ -43,21 +43,21 @@ export default async function Home() {
             <a
               href="https://haume.me"
               target="_blank"
-              className="px-4 sm:px-5 h-9 sm:h-10 text-sm sm:text-base flex items-center justify-center bg-white/5 hover:bg-white/10 border-[1px] border-transparent ease-in-out duration-300 hover:border-white/20 rounded-xl"
+              className="px-4 sm:px-5 h-9 sm:h-10 text-sm sm:text-base flex items-center justify-center bg-white/5 hover:bg-white/10 border border-transparent ease-in-out duration-300 hover:border-white/20 rounded-xl"
             >
               Website
             </a>
             <a
               href="https://github.com/haume0"
               target="_blank"
-              className="px-4 sm:px-5 h-9 sm:h-10 text-sm sm:text-base flex items-center justify-center bg-white/5 hover:bg-white/10 border-[1px] border-transparent ease-in-out duration-300 hover:border-white/20 rounded-xl"
+              className="px-4 sm:px-5 h-9 sm:h-10 text-sm sm:text-base flex items-center justify-center bg-white/5 hover:bg-white/10 border border-transparent ease-in-out duration-300 hover:border-white/20 rounded-xl"
             >
               Github
             </a>
             <a
               href="https://behance.net/haume"
               target="_blank"
-              className="px-4 sm:px-5 h-9 sm:h-10 text-sm sm:text-base flex items-center justify-center bg-white/5 hover:bg-white/20 border-[1px] border-transparent ease-in-out duration-300 hover:border-white/20 rounded-xl"
+              className="px-4 sm:px-5 h-9 sm:h-10 text-sm sm:text-base flex items-center justify-center bg-white/5 hover:bg-white/20 border border-transparent ease-in-out duration-300 hover:border-white/20 rounded-xl"
             >
               Behance
             </a>

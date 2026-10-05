@@ -9,7 +9,7 @@ function randomVideoId(radios: string[]) {
 }
 
 const controlButton =
-  "bgblur-4 size-10 flex items-center justify-center bg-white/10 hover:bg-white/20 border-[1px] border-transparent ease-in-out hover:border-white/20 rounded-xl duration-300 disabled:opacity-50 disabled:pointer-events-none";
+  "bgblur-4 size-10 flex items-center justify-center bg-white/10 hover:bg-white/20 border border-transparent ease-in-out hover:border-white/20 rounded-xl duration-300 disabled:opacity-50 disabled:pointer-events-none";
 
 export default function Radio(props: { radios: string[] }) {
   const [isClient, setClient] = useState(false);
@@ -174,10 +174,10 @@ export default function Radio(props: { radios: string[] }) {
   return (
     <motion.div
       layout
-      className={`group bgblur-4 flex flex-col bg-black/20 border-[1px] border-black/20 ${
+      className={`group bgblur-4 flex flex-col bg-black/20 border border-black/20 ${
         background.state
           ? "w-screen h-dvh fixed left-0 top-0"
-          : "relative p-2 overflow-hidden rounded-2xl w-full aspect-video lg:size-max lg:flex-grow lg:h-full lg:aspect-[5/4]"
+          : "relative p-2 overflow-hidden rounded-2xl w-full aspect-video lg:size-max lg:grow lg:h-full lg:aspect-5/4"
       }`}
     >
       {isClient && (
@@ -196,7 +196,7 @@ export default function Radio(props: { radios: string[] }) {
           {background.state ? (
             <div
               id="bgblock"
-              className="w-full bgmodeblur ease-smooth duration-300 font-jetbrains-mono font-extralight active:hover:!delay-0 z-40 text-base sm:text-lg md:text-xl text-center active:bg-purple-500/20 flex items-end justify-center text-transparent active:text-purple-200 active:border-purple-500/40 border-b-2 border-transparent h-[calc(100%-110px)] absolute top-0 left-0"
+              className="w-full bgmodeblur ease-smooth duration-300 font-jetbrains-mono font-extralight active:hover:delay-0! z-40 text-base sm:text-lg md:text-xl text-center active:bg-purple-500/20 flex items-end justify-center text-transparent active:text-purple-200 active:border-purple-500/40 border-b-2 border-transparent h-[calc(100%-110px)] absolute top-0 left-0"
             >
               You are in background mode. <br />
               Use the area that is not purple when clicked to interact with
@@ -211,9 +211,9 @@ export default function Radio(props: { radios: string[] }) {
         </motion.div>
       )}
       <motion.span
-        className={`absolute p-3 sm:p-4 size-max right-0 justify-end z-50 flex gap-2 pointer-events-none [&>*]:pointer-events-auto ${
+        className={`absolute p-3 sm:p-4 size-max right-0 justify-end z-50 flex gap-2 pointer-events-none *:pointer-events-auto ${
           background.state
-            ? " flex-wrap-reverse items-end w-full bottom-[110px] md:bottom-auto md:top-0 max-w-[36rem]"
+            ? " flex-wrap-reverse items-end w-full bottom-[110px] md:bottom-auto md:top-0 max-w-xl"
             : " flex-row w-full top-0"
         }`}
       >
@@ -254,7 +254,7 @@ export default function Radio(props: { radios: string[] }) {
                 </svg>
               )}
             </button>
-            <span className="bgblur-4 h-10 flex items-center gap-2 pr-3 bg-white/10 border-[1px] border-transparent hover:border-white/20 rounded-xl duration-300 ease-in-out">
+            <span className="bgblur-4 h-10 flex items-center gap-2 pr-3 bg-white/10 border border-transparent hover:border-white/20 rounded-xl duration-300 ease-in-out">
               <button
                 onClick={(e) => {
                   e.stopPropagation();
@@ -340,7 +340,7 @@ export default function Radio(props: { radios: string[] }) {
                     }
                   }}
                   title="Shuffle the radios or go to the next radio if shift is held."
-                  className="size-10 bgblur-4 flex items-center justify-center bg-white/10 hover:bg-white/20 border-[1px] border-transparent ease-in-out hover:border-white/20 rounded-xl duration-300"
+                  className="size-10 bgblur-4 flex items-center justify-center bg-white/10 hover:bg-white/20 border border-transparent ease-in-out hover:border-white/20 rounded-xl duration-300"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -379,7 +379,7 @@ export default function Radio(props: { radios: string[] }) {
                     setChange(!change);
                   }}
                   title="Change the radio."
-                  className="bgblur-4 size-10 flex items-center justify-center bg-white/10 hover:bg-white/20 border-[1px] border-transparent ease-in-out hover:border-white/20 rounded-xl duration-300"
+                  className="bgblur-4 size-10 flex items-center justify-center bg-white/10 hover:bg-white/20 border border-transparent ease-in-out hover:border-white/20 rounded-xl duration-300"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -417,7 +417,7 @@ export default function Radio(props: { radios: string[] }) {
                     e.stopPropagation();
                     background.toggle();
                   }}
-                  className="bgblur-4 size-10 flex items-center justify-center bg-white/10 hover:bg-white/20 border-[1px] border-transparent ease-in-out hover:border-white/20 rounded-xl duration-300"
+                  className="bgblur-4 size-10 flex items-center justify-center bg-white/10 hover:bg-white/20 border border-transparent ease-in-out hover:border-white/20 rounded-xl duration-300"
                   title="Toggle background mode."
                 >
                   {background.state ? (
@@ -501,7 +501,7 @@ export default function Radio(props: { radios: string[] }) {
                   onClick={() => {
                     setChange(false);
                   }}
-                  className="bgblur-4 size-10 flex items-center justify-center bg-white/10 hover:bg-white/20 border-[1px] border-transparent ease-in-out hover:border-white/20 rounded-xl duration-300"
+                  className="bgblur-4 size-10 flex items-center justify-center bg-white/10 hover:bg-white/20 border border-transparent ease-in-out hover:border-white/20 rounded-xl duration-300"
                   title="Change radio."
                 >
                   <svg
@@ -553,7 +553,7 @@ export default function Radio(props: { radios: string[] }) {
                   type="text"
                   name="video"
                   placeholder="Enter a YouTube video URL."
-                  className="px-3 w-full bgblur-4 rounded-xl h-10 bg-white/10 focus:bg-white/20 border-[1px] border-transparent ease-in-out focus:border-white/20 outline-none duration-300"
+                  className="px-3 w-full bgblur-4 rounded-xl h-10 bg-white/10 focus:bg-white/20 border border-transparent ease-in-out focus:border-white/20 outline-hidden duration-300"
                 />
               </motion.span>
               <motion.span
@@ -580,7 +580,7 @@ export default function Radio(props: { radios: string[] }) {
                 }}
               >
                 <button
-                  className="px-5 bgblur-4 size-max h-10 flex items-center justify-center bg-white/10 hover:bg-white/20 border-[1px] border-transparent ease-in-out hover:border-white/20 rounded-xl duration-300"
+                  className="px-5 bgblur-4 size-max h-10 flex items-center justify-center bg-white/10 hover:bg-white/20 border border-transparent ease-in-out hover:border-white/20 rounded-xl duration-300"
                   title="Change radio."
                 >
                   Enter

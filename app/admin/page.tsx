@@ -31,23 +31,23 @@ function Login() {
           revalidatePath("/");
         }
       }}
-      className="flex flex-col w-[28rem] relative gap-2"
+      className="flex flex-col w-md relative gap-2"
     >
       <h1 className="text-center text-4xl font-black">LOFODO Admin Panel</h1>
       <input
         type="text"
         name="username"
         placeholder="Enter admin username."
-        className="px-3 w-full bgblur-4 rounded-xl h-10 bg-white/10 focus:bg-white/20 border-[1px] border-transparent ease-in-out focus:border-white/20 outline-none duration-300"
+        className="px-3 w-full bgblur-4 rounded-xl h-10 bg-white/10 focus:bg-white/20 border border-transparent ease-in-out focus:border-white/20 outline-hidden duration-300"
       />
       <input
         type="password"
         name="password"
         placeholder="Enter password."
-        className="px-3 w-full bgblur-4 rounded-xl h-10 bg-white/10 focus:bg-white/20 border-[1px] border-transparent ease-in-out focus:border-white/20 outline-none duration-300"
+        className="px-3 w-full bgblur-4 rounded-xl h-10 bg-white/10 focus:bg-white/20 border border-transparent ease-in-out focus:border-white/20 outline-hidden duration-300"
       />
       <button
-        className="px-5 bgblur-4 size-full h-10 flex items-center justify-center bg-white/10 hover:bg-white/20 border-[1px] border-transparent ease-in-out hover:border-white/20 rounded-xl duration-300"
+        className="px-5 bgblur-4 size-full h-10 flex items-center justify-center bg-white/10 hover:bg-white/20 border border-transparent ease-in-out hover:border-white/20 rounded-xl duration-300"
         title="Change radio."
       >
         Enter

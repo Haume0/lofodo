@@ -177,7 +177,7 @@ export default function Radio(props: { radios: string[] }) {
       className={`group bgblur-4 flex flex-col bg-black/20 border border-black/20 ${
         background.state
           ? "w-screen h-dvh fixed left-0 top-0"
-          : "relative p-2 overflow-hidden rounded-2xl w-full aspect-video lg:size-max lg:grow lg:h-full lg:aspect-5/4"
+          : "snap-center relative p-2 overflow-hidden rounded-2xl w-full aspect-video lg:size-max lg:grow lg:h-full lg:aspect-5/4"
       }`}
     >
       {isClient && (

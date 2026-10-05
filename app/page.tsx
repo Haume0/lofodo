@@ -15,7 +15,7 @@ export default async function Home() {
           back to the page corner. */}
       <span className="relative lg:static flex flex-col gap-3 sm:gap-4 lg:gap-0 lg:justify-between lg:h-full w-full max-w-xl mx-auto lg:max-w-none lg:mx-0">
         <BackgroundImage backgrounds={backgrounds} />
-        <main className="bgblur-4 relative z-10 w-full lg:max-w-lg h-max p-4 sm:p-6 flex flex-col gap-2 rounded-2xl bg-black/20 border border-black/20">
+        <main className="snap-center bgblur-4 relative z-10 w-full lg:max-w-lg h-max p-4 sm:p-6 flex flex-col gap-2 rounded-2xl bg-black/20 border border-black/20">
           <Image
             src="/lofodo-text.svg"
             width={172}
@@ -63,7 +63,7 @@ export default async function Home() {
             </a>
           </ul>
         </main>
-        <span className="flex justify-center w-full lg:w-auto lg:mx-auto lg:mb-auto">
+        <span className="snap-center flex justify-center w-full lg:w-auto lg:mx-auto lg:mb-auto">
           <Clock />
         </span>
         <Radio radios={radios} />

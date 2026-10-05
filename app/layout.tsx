@@ -18,8 +18,11 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // Mobile stacks the intro, clock and radio cards in one scrolling page;
+  // snapping lands each card in view instead of stopping between them.
+  // lg fits everything on one screen, so there's nothing to snap.
   return (
-    <html lang="en">
+    <html lang="en" className="snap-y snap-mandatory lg:snap-none">
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />

@@ -11,6 +11,31 @@ function randomVideoId(radios: string[]) {
 const controlButton =
   "bgblur-4 size-10 flex items-center justify-center bg-white/10 hover:bg-white/20 border border-transparent ease-in-out hover:border-white/20 rounded-xl duration-300 disabled:opacity-50 disabled:pointer-events-none";
 
+// Toolbar items pop in and out one after another; each one's delay sets its
+// place in that order.
+function PopIn(props: {
+  delay: number;
+  className?: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <motion.span
+      initial={{ opacity: 0, scale: 0.8 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.8 }}
+      transition={{
+        type: "spring",
+        stiffness: 200,
+        damping: 20,
+        delay: props.delay,
+      }}
+      className={props.className}
+    >
+      {props.children}
+    </motion.span>
+  );
+}
+
 export default function Radio(props: { radios: string[] }) {
   const [isClient, setClient] = useState(false);
   const background = useBackground();
@@ -180,29 +205,19 @@ export default function Radio(props: { radios: string[] }) {
     <motion.span
       className={`absolute top-0 right-0 size-max w-full justify-end z-50 flex gap-2 pointer-events-none *:pointer-events-auto ${
         background.state
-          ? // The gap rarely lines up with the letterboxed video, so on mobile
-            // the controls carry their own card instead of relying on it.
-            "p-2 rounded-2xl bg-black/20 border border-black/20 backdrop-blur-xs lg:p-4 lg:rounded-none lg:bg-transparent lg:border-0 lg:backdrop-blur-none lg:fixed lg:flex-wrap-reverse lg:items-end lg:max-w-xl"
+          ? // The gap rarely lines up with the letterboxed video, so the
+            // controls carry their own card instead of relying on it. w-96
+            // fits the toolbar and the URL form, and keeps lg clear of the
+            // intro card.
+            "p-2 rounded-2xl bg-black/20 border border-black/20 backdrop-blur-xs lg:fixed lg:top-4 lg:right-4 lg:w-96"
           : "p-3 sm:p-4"
       }`}
     >
       <AnimatePresence mode="wait">
         {!change ? (
           <>
-            <span
-              className={`flex items-center gap-2 mr-auto ${background.state ? "lg:mr-0" : ""}`}
-            >
-              <motion.span
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.8 }}
-                transition={{
-                  type: "spring",
-                  stiffness: 200,
-                  damping: 20,
-                  delay: 0.4,
-                }}
-              >
+            <span className="flex items-center gap-2 mr-auto">
+              <PopIn delay={0.4}>
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
@@ -236,18 +251,8 @@ export default function Radio(props: { radios: string[] }) {
                     </svg>
                   )}
                 </button>
-              </motion.span>
-              <motion.span
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.8 }}
-                transition={{
-                  type: "spring",
-                  stiffness: 200,
-                  damping: 20,
-                  delay: 0.3,
-                }}
-              >
+              </PopIn>
+              <PopIn delay={0.3}>
                 <span className="bgblur-4 h-10 flex items-center gap-2 pr-3 bg-white/10 border border-transparent hover:border-white/20 rounded-xl duration-300 ease-in-out">
                   <button
                     onClick={(e) => {
@@ -303,19 +308,9 @@ export default function Radio(props: { radios: string[] }) {
                     className="w-16 sm:w-24 accent-white cursor-pointer disabled:opacity-50"
                   />
                 </span>
-              </motion.span>
+              </PopIn>
             </span>
-            <motion.span
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.8 }}
-              transition={{
-                type: "spring",
-                stiffness: 200,
-                damping: 20,
-                delay: 0.2,
-              }}
-            >
+            <PopIn delay={0.2}>
               <motion.button
                 onClick={(e) => {
                   e.stopPropagation();
@@ -330,7 +325,7 @@ export default function Radio(props: { radios: string[] }) {
                   }
                 }}
                 title="Shuffle the radios or go to the next radio if shift is held."
-                className="size-10 bgblur-4 flex items-center justify-center bg-white/10 hover:bg-white/20 border border-transparent ease-in-out hover:border-white/20 rounded-xl duration-300"
+                className={controlButton}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -351,25 +346,15 @@ export default function Radio(props: { radios: string[] }) {
                   />
                 </svg>
               </motion.button>
-            </motion.span>
-            <motion.span
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.8 }}
-              transition={{
-                type: "spring",
-                stiffness: 200,
-                damping: 20,
-                delay: 0.1,
-              }}
-            >
+            </PopIn>
+            <PopIn delay={0.1}>
               <motion.button
                 onClick={(e) => {
                   e.stopPropagation();
                   setChange(!change);
                 }}
                 title="Change the radio."
-                className="bgblur-4 size-10 flex items-center justify-center bg-white/10 hover:bg-white/20 border border-transparent ease-in-out hover:border-white/20 rounded-xl duration-300"
+                className={controlButton}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -390,24 +375,14 @@ export default function Radio(props: { radios: string[] }) {
                   />
                 </svg>
               </motion.button>
-            </motion.span>
-            <motion.span
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.8 }}
-              transition={{
-                type: "spring",
-                stiffness: 200,
-                damping: 20,
-                delay: 0,
-              }}
-            >
+            </PopIn>
+            <PopIn delay={0}>
               <motion.button
                 onClick={(e) => {
                   e.stopPropagation();
                   background.toggle();
                 }}
-                className="bgblur-4 size-10 flex items-center justify-center bg-white/10 hover:bg-white/20 border border-transparent ease-in-out hover:border-white/20 rounded-xl duration-300"
+                className={controlButton}
                 title="Toggle background mode."
               >
                 {background.state ? (
@@ -442,7 +417,7 @@ export default function Radio(props: { radios: string[] }) {
                   </svg>
                 )}
               </motion.button>
-            </motion.span>
+            </PopIn>
           </>
         ) : (
           <motion.form
@@ -463,35 +438,13 @@ export default function Radio(props: { radios: string[] }) {
             key="form"
             className="changeModal bgblur-4 relative w-full max-w-[24rem] flex gap-2"
           >
-            <motion.span
-              initial={{
-                opacity: 0,
-                scale: 0.8,
-                transformOrigin: "right center",
-              }}
-              animate={{
-                opacity: 1,
-                scale: 1,
-                transformOrigin: "right center",
-              }}
-              exit={{
-                opacity: 0,
-                scale: 0.8,
-                transformOrigin: "right center",
-              }}
-              transition={{
-                type: "spring",
-                stiffness: 300,
-                damping: 20,
-                delay: 0.2,
-              }}
-            >
+            <PopIn delay={0.2} className="origin-right">
               <button
                 type="button"
                 onClick={() => {
                   setChange(false);
                 }}
-                className="bgblur-4 size-10 flex items-center justify-center bg-white/10 hover:bg-white/20 border border-transparent ease-in-out hover:border-white/20 rounded-xl duration-300"
+                className={controlButton}
                 title="Change radio."
               >
                 <svg
@@ -511,31 +464,8 @@ export default function Radio(props: { radios: string[] }) {
                   </g>
                 </svg>
               </button>
-            </motion.span>
-            <motion.span
-              initial={{
-                opacity: 0,
-                scale: 0.8,
-                transformOrigin: "right center",
-              }}
-              animate={{
-                opacity: 1,
-                scale: 1,
-                transformOrigin: "right center",
-              }}
-              exit={{
-                opacity: 0,
-                scale: 0.8,
-                transformOrigin: "right center",
-              }}
-              transition={{
-                type: "spring",
-                stiffness: 200,
-                damping: 20,
-                delay: 0.1,
-              }}
-              className="w-full"
-            >
+            </PopIn>
+            <PopIn delay={0.1} className="origin-right w-full">
               <input
                 defaultValue={
                   videoId ? `https://www.youtube.com/watch?v=${videoId}` : ""
@@ -545,37 +475,15 @@ export default function Radio(props: { radios: string[] }) {
                 placeholder="Enter a YouTube video URL."
                 className="px-3 w-full bgblur-4 rounded-xl h-10 bg-white/10 focus:bg-white/20 border border-transparent ease-in-out focus:border-white/20 outline-hidden duration-300"
               />
-            </motion.span>
-            <motion.span
-              initial={{
-                opacity: 0,
-                scale: 0.8,
-                transformOrigin: "right center",
-              }}
-              animate={{
-                opacity: 1,
-                scale: 1,
-                transformOrigin: "right center",
-              }}
-              exit={{
-                opacity: 0,
-                scale: 0.8,
-                transformOrigin: "right center",
-              }}
-              transition={{
-                type: "spring",
-                stiffness: 300,
-                damping: 20,
-                delay: 0,
-              }}
-            >
+            </PopIn>
+            <PopIn delay={0} className="origin-right">
               <button
                 className="px-5 bgblur-4 size-max h-10 flex items-center justify-center bg-white/10 hover:bg-white/20 border border-transparent ease-in-out hover:border-white/20 rounded-xl duration-300"
                 title="Change radio."
               >
                 Enter
               </button>
-            </motion.span>
+            </PopIn>
           </motion.form>
         )}
       </AnimatePresence>

@@ -2,7 +2,6 @@
 import useBackground from "@/store/background";
 import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
-import { createPortal } from "react-dom";
 import { getVideoId, loadYouTubeApi, PlayerState, YTPlayer } from "./youtube";
 
 function randomVideoId(radios: string[]) {
@@ -174,21 +173,22 @@ export default function Radio(props: { radios: string[] }) {
 
   // Background mode makes the player `fixed`, which always opens its own
   // stacking context, so the intro and clock cards (z-10) would cover the
-  // controls whatever their z-index. Portaling them to body lets them sit
-  // above the cards while the video stays behind.
+  // controls whatever their z-index. There the controls render in the gap
+  // below the player instead: on mobile they sit on the video band like the
+  // card's toolbar, on lg the gap is `contents` and they go to the corner.
   const controls = (
     <motion.span
-      className={`p-3 sm:p-4 size-max right-0 justify-end z-50 flex gap-2 pointer-events-none *:pointer-events-auto ${
+      className={`absolute top-0 right-0 p-3 sm:p-4 size-max w-full justify-end z-50 flex gap-2 pointer-events-none *:pointer-events-auto ${
         background.state
-          ? " fixed flex-wrap-reverse items-end w-full bottom-[110px] md:bottom-auto md:top-0 max-w-xl"
-          : " absolute flex-row w-full top-0"
+          ? "lg:fixed lg:flex-wrap-reverse lg:items-end lg:max-w-xl"
+          : ""
       }`}
     >
       <AnimatePresence mode="wait">
         {!change ? (
           <>
             <span
-              className={`flex items-center gap-2 ${background.state ? "" : "mr-auto"}`}
+              className={`flex items-center gap-2 mr-auto ${background.state ? "lg:mr-0" : ""}`}
             >
               <motion.span
                 initial={{ opacity: 0, scale: 0.8 }}
@@ -602,7 +602,7 @@ export default function Radio(props: { radios: string[] }) {
               className="size-full [&_iframe]:size-full"
             />
             {/* Blocks the video except the bottom strip, where YouTube's own
-              progress bar lives. Keep 110px in sync with the toolbar offset. */}
+              progress bar lives. */}
             {background.state ? (
               <div
                 id="bgblock"
@@ -620,7 +620,7 @@ export default function Radio(props: { radios: string[] }) {
             )}
           </motion.div>
         )}
-        {background.state ? createPortal(controls, document.body) : controls}
+        {!background.state && controls}
       </motion.div>
       {/* Going fixed drops the player out of the mobile stack, so the scroll
           ends on the clock and the middle of the video stays covered. This
@@ -628,7 +628,9 @@ export default function Radio(props: { radios: string[] }) {
           video. A full-screen gap would force a scroll in portrait even when
           the video is already in view. lg shows the video behind the cards. */}
       {background.state && (
-        <div className="lg:hidden w-full max-w-screen aspect-video shrink-0 snap-center pointer-events-none" />
+        <div className="relative w-full max-w-screen aspect-video shrink-0 snap-center pointer-events-none lg:contents">
+          {controls}
+        </div>
       )}
     </>
   );
